@@ -6,7 +6,7 @@ Real-time time-dependent density functional theory (RT-TDDFT) is a
 DFT-based approach to electronic excited states based on integrating the
 time-dependent Kohn-Sham (TDKS) equations in time. The theoretical
 underpinnings, strengths, and limitations are similar to traditional
-linear-response (LR) [TDDFT](Excited-State_Calculations "wikilink")
+linear-response (LR) [TDDFT](Excited-State-Calculations "wikilink")
 methods, but instead of a frequency domain solution to the TDKS
 equations, RT-TDDFT yields a full time-resolved, potentially non-linear
 solution. Real-time simulations can be used to compute not only
@@ -21,7 +21,7 @@ the following paper:
     Molecules and Chromophores", J. Chem. Theory Comput., 7, 1344 (2011)
 
 This functionality is built on the [Gaussian basis set
-DFT](Density_Functional_Theory_for_Molecules "wikilink") module, and
+DFT](Density-Functional-Theory-for-Molecules "wikilink") module, and
 will work for closed-shell (spin-restricted) and open-shell (spin
 unrestricted) calculations with essentially any combination of basis set
 and exchange-correlation functional in NWChem. The current
@@ -143,7 +143,7 @@ Dipole moment
 
 The [charge](Charge "wikilink"), [geometry](Geometry "wikilink"), [basis
 set](Basis "wikilink"), and
-[DFT](Density_Functional_Theory_for_Molecules "wikilink") options are
+[DFT](Density-Functional-Theory-for-Molecules "wikilink") options are
 all specified as normal, using their respective syntax. Real-time TDDFT
 parameters are supplied in the RT\_TDDFT block (note, nothing is
 case-sensitive), with all possible options summarized below, and each
@@ -406,7 +406,7 @@ The defaults correspond to:
 This sub-block is used to specify external electric fields, each of
 which must be given a unique name. Numerous fields can be specified, but
 each will applied to the system only if an appropriate [excitation
-rule](RT-TDDFT#EXCITE_--_Excitation_rules "wikilink") is set.
+rule](RT-TDDFT#excite----excitation-rules "wikilink") is set.
 There are a few preset field types; others would have to be manually
 coded. Note the names are arbitrary, but chosen here to be
 descriptive:
@@ -452,7 +452,7 @@ This sets the rules for applying external fields to the system. It takes
 the form "excite <geom> with <field>", where <geom> is the name of a
 geometry fragment (defaults to "geometry" which is the default geometry
 name), and <field> is the name of a [field
-structure](RT-TDDFT#FIELD_--_Sub-block_for_specifying_external_electric_fields "wikilink").
+structure](RT-TDDFT#field----sub-block-for-specifying-external-electric-fields "wikilink").
 Assuming, for example, you have defined a field name "kick" this option
 takes the form (note that quotes are optional and shown for clarity):
 

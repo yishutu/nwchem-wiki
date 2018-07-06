@@ -13,27 +13,32 @@ Performance of the Gaussian basis set DFT module in NWChem. This
 calculation involved performing a PBE0 calculation (in direct mode) on
 the on C<sub>240</sub> system with the 6-31G\* basis set (3600 basis
 functions) without symmetry. These calculations were performed on the
-Cascade supercomputer located at PNNL. The [input
-file](input_c240_pbe0.nw "wikilink") is available.
+Cascade supercomputer located at PNNL. [Input](c240_631gs.nw "wikilink") and
+[output](c240_631gs.output "wikilink") files are available.
 
-![c240\_web4.png](./c240_web4.png "c240_web4.png")
+![c240\_web10.png](./c240_web10.png "c240_web4.png")
 
 # Parallel performance of *Ab initio* Molecular Dynamics using plane waves
 
-|AIMD Parallel timings for <img alt="$UO_2^{2+}$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/4cd58371c815e721956191c6092523a5.svg?invert_in_darkmode&sanitize=true" align=middle width="42.50433pt" height="28.83969pt"/>+122<img alt="$H_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/912631c954499428b64ab8d828ac8cb6.svg?invert_in_darkmode&sanitize=true" align=middle width="20.141385pt" height="22.38192pt"/>O.
+AIMD Parallel timings for <img alt="$UO_2^{2+}$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/4cd58371c815e721956191c6092523a5.svg?invert_in_darkmode&sanitize=true" align=middle width="42.50433pt" height="28.83969pt"/>+122<img alt="$H_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/912631c954499428b64ab8d828ac8cb6.svg?invert_in_darkmode&sanitize=true" align=middle width="20.141385pt" height="22.38192pt"/>O.
 These calculations were performed on the Franklin Cray-XT4 computer
-system at NERSC.![PW](PWScaling.png "wikilink") 
+system at NERSC.  
+![PW](PWScaling.png "wikilink")  
+
 AIMD and AIMD/MM Parallel Timings for <img alt="$Zn^{2+}$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/535088252ee6a9c0146ed4ba09c15c92.svg?invert_in_darkmode&sanitize=true" align=middle width="38.76708pt" height="26.70657pt"/>+64<img alt="$H_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/912631c954499428b64ab8d828ac8cb6.svg?invert_in_darkmode&sanitize=true" align=middle width="20.141385pt" height="22.38192pt"/>O (unit
 cell parameters SC=12.4 Angs. and cutoff energy =100Ry). These
 calculations were performed on the Chinook HP computer system at MSCF
-EMSL, PNNL.![PWMD](PWMDScaling.png "wikilink") Exact
-exchange timings – 80 atom cell of hematite (cutoff energy=100Ry). These
+EMSL, PNNL.  
+![PWMD](PWMDScaling.png "wikilink")  
+Exact exchange timings – 80 atom cell of hematite (cutoff energy=100Ry). These
 calculations were performed on the Franklin Cray-XT4 computer system at
-NERSC.
-![](PWEXScaling.png "wikilink") Exact
+NERSC.  
+![](PWEXScaling.png "wikilink")  
+Exact
 exchange timings – 576 atom cell of water (cutoff energy=100Ry). These
 calculations were performed on the Hopper Cray-XE6 computer system at
-NERSC.![](water192b.png "wikilink")
+NERSC.  
+![](water192b.png "wikilink")  
 
 # Parallel performance of the CR-EOMCCSD(T) method (triples part)
 
@@ -64,13 +69,19 @@ scalabililty tests for the Brillouin-Wigner MRCCSD approach have been
 performed on Jaguar XT5 system at ORNL for <img alt="$\beta$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/8217ed3c32a785f0b5aad4055f432ad8.svg?invert_in_darkmode&sanitize=true" align=middle width="10.1277pt" height="22.74591pt"/>-carotene in 6-31
 basis set (472 orbitals, 216 correlated electrons, 20 reference
 functions; see J.Brabec, J. Pittner, H.J.J. van Dam, E. Aprà, K.
-Kowalski, JCTC 2012, 8(2), pp 487–497). Currently, PNNL postdoctoral
-fellow Dr. Kiran Bhaskaran Nair is developing perturbative MRCCSD(T)
-approaches, which accounts for the effect of triple excitations.
+Kowalski, JCTC 2012, 8(2), pp 487–497). 
+The [input file](betacarotene.nw "wikilink") and output files for runs
+at [6000 cores](betacarotene.out.6000procs "wikilink"),
+at [12000 cores](betacarotene.out.12000procs "wikilink")
+and at [24000 cores](betacarotene.out.24000procs "wikilink")
+are available.  
 
 ![mrccsd\_scalability.png](mrccsd_scalability.png 
 "mrccsd_scalability.png")
 
+Former PNNL postdoctoral
+fellow Dr. Kiran Bhaskaran Nair developed perturbative MRCCSD(T)
+approaches, which accounts for the effect of triple excitations.
 Scaling of the triples part of the BW-MRCCSD(T) method for
 <img alt="$\beta$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/8217ed3c32a785f0b5aad4055f432ad8.svg?invert_in_darkmode&sanitize=true" align=middle width="10.1277pt" height="22.74591pt"/>-carotene in 6-31 basis set (JCP 137, 094112 (2012)). The
 scalability tests of the BW-MRCCSD(T) implementation of NWChem have been
@@ -88,29 +99,29 @@ performed for state of b1g symmetry, in all test calculation convergence
 threshold was relaxed, 1024 cores were used). See the [ input
 file](input_p2ta.nw "wikilink") for
 details.
-
-`--------------------------------------------------------`  
-` Iter          Residuum       Correlation     Cpu    Wall`  
-` --------------------------------------------------------`  
-`   1   0.7187071521175  -7.9406033677717   640.9   807.7`  
-`   ......`  
-` MICROCYCLE DIIS UPDATE: 10 5`  
-`  11   0.0009737920958  -7.9953441809574   691.1   822.2`  
-` --------------------------------------------------------`  
-` Iterations converged`  
-` CCSD correlation energy / hartree =        -7.995344180957357`  
-` CCSD total energy / hartree       =     -2418.570838364838890`  
+```
+--------------------------------------------------------
+ Iter          Residuum       Correlation     Cpu    Wall
+ --------------------------------------------------------
+   1   0.7187071521175  -7.9406033677717   640.9   807.7
+   ......
+ MICROCYCLE DIIS UPDATE: 10 5
+  11   0.0009737920958  -7.9953441809574   691.1   822.2
+ --------------------------------------------------------
+ Iterations converged
+ CCSD correlation energy / hartree =        -7.995344180957357
+ CCSD total energy / hartree       =     -2418.570838364838890
   
-` EOM-CCSD right-hand side iterations`  
-` --------------------------------------------------------------`  
-`      Residuum       Omega / hartree  Omega / eV    Cpu    Wall`  
-` --------------------------------------------------------------`  
-`......`  
-`Iteration   2 using    6 trial vectors`  
-`  0.1584284659595   0.0882389635508    2.40111   865.3  1041.2`  
-`Iteration   3 using    7 trial vectors`  
-`  0.0575982107592   0.0810948687618    2.20670   918.0  1042.2`
-
+ EOM-CCSD right-hand side iterations
+ --------------------------------------------------------------
+      Residuum       Omega / hartree  Omega / eV    Cpu    Wall
+ --------------------------------------------------------------
+......
+Iteration   2 using    6 trial vectors
+  0.1584284659595   0.0882389635508    2.40111   865.3  1041.2
+Iteration   3 using    7 trial vectors
+  0.0575982107592   0.0810948687618    2.20670   918.0  1042.2
+```
 # Performance tests of the GPU implementation of non-iterative part of the CCSD(T) approach
 
 Recent tests of the GPU CCSD(T) implementation performed on Titan Cray
@@ -165,10 +176,9 @@ Dam, E. Aprà, K. Kowalski, J. Chem. Theory Comput. 9, 1949 (2013))
 
 # Performance tests of the Xeon Phi implementation of non-iterative part of the CCSD(T) approach
 
-Recent tests (January 2015) of the Xeon Phi CCSD(T) implementation
-performed on EMSL cascade
-[2](http://www.emsl.pnl.gov/emslweb/instruments/computing-cascade-atipa-1440-intel-xeon-phi-node-fdr-infiniband-linux-cluster)
-system at PNNL
+Tests  of the Xeon Phi CCSD(T) implementation
+performed on the EMSL [cascade](http://www.emsl.pnl.gov/emslweb/instruments/computing-cascade-atipa-1440-intel-xeon-phi-node-fdr-infiniband-linux-cluster)
+system at PNNL 
 
 ![Triplet\_updated\_feb2015.png](Triplet_updated_feb2015.png
 "Triplet_updated_feb2015.png")
@@ -176,8 +186,7 @@ system at PNNL
 Aprà, E.; Klemm, M.; Kowalski, K., "Efficient Implementation of
 Many-Body Quantum Chemical Methods on the Intel® Xeon Phi Coprocessor,"
 High Performance Computing, Networking, Storage and Analysis, SC14:
-International Conference for , vol., no., pp.674,684, 16-21 Nov. 2014
-[3](http://dx.doi.org/10.1109/SC.2014.60)
+International Conference for , vol., no., pp.674-684, 16-21 Nov. 2014 [http://dx.doi.org/10.1109/SC.2014.60](http://dx.doi.org/10.1109/SC.2014.60)
 
 (Triplet state of
 Si<sub>4</sub>C<sub>3</sub>N<sub>2</sub>H<sub>12</sub>, 706 basis set

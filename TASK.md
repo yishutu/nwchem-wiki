@@ -258,17 +258,17 @@ energies, energy gradients, geometry optimizations, Hessians and
 frequencies, at the level of theory that allows these tasks, can be
 obtained with the BSSE correction. The input options for the BSSE
 section are:
-
-`BSSE `  
-` MON `<string monomer name>` `<integer natoms>`  `  
-` [INPUT [`<string input>`]]  `  
-` [INPUT_WGHOST[`<string input>`]]  `  
-` [CHARGE [`<real charge>`]]  `  
-` [ MULT `<integer mult>`]`  
-` [OFF]  `  
-` [ON]`  
-`END`
-
+```
+BSSE   
+ MON <string monomer name> <integer natoms>  
+ [INPUT [<string input>]]    
+ [INPUT_WGHOST[<string input>]]    
+ [CHARGE [<real charge>]]    
+ [ MULT <integer mult>]  
+ [OFF]    
+ [ON]  
+END
+```
 MON defines the monomer's name and its atoms; <string monomer name>
 defines the name of the monomer, <integer atoms> is the list of atoms
 corresponding to the monomer (where such a list is relative to the
@@ -276,12 +276,12 @@ initial geometry). This information is needed for each monomer. With the
 tag INPUT the user can modify any calculation attributes for each
 monomer without ghost. For example, the iterations number and the grid
 can be changed in a DFT calculation (see the example of the interaction
-between \(Zn^{2+}\) and water). INPUT\_WGHOST is the same than INPUT but
+between Zn<sup>2+</sup> and water). INPUT\_WGHOST is the same than INPUT but
 for the monomer with ghost. The input changes will be applied within
 this and for the following calculations, you should be cautious
 reverting the changes for the next monomers. CHARGE assigns a charge to
 a monomer and it must be consistent with the total charge in the whole
-system (see Section -sec:charge-). The options OFF and ON turns off and
+system (see Section [Charge](Charge "wikilink")). The options OFF and ON turns off and
 on any BSSE calculation.
 
 The energy evaluation involves 1 + 2N calculations, i.e. one for the
@@ -294,57 +294,59 @@ corresponding bqX for each element, instead.
 
 ### Examples
 
-The dimer \((FH)_2\)
+The dimer (FH)<sub>2</sub>
 
-`title dimer`  
-`start dimer`  
-`geometry units angstrom`  
-`  symmetry c1 `  
-`  F 1.47189 2.47463 -0.00000 `  
-`  H 1.47206 3.29987 0.00000  `  
-`  F 1.46367 -0.45168 0.00000 `  
-`  H 1.45804 0.37497 -0.00000`  
-`end`  
-`basis "ao basis" `  
-`  F library 6-31G `  
-`  H library 6-31G `  
-`  bqF library F 6-31G `  
-`  bqH library H 6-31G`  
-`end`  
-`dft; xc slater 1.0 vwn_5 1.0; direct; end`  
-`bsse `  
-` mon first 1 2 `  
-` mon second 3 4`  
-`end`  
-`task dft energy`
-
-Changing maxiter for a specific monomer: \(Zn^{2+}(H_2O)\)
-
-`title znwater`  
-`start znwater`  
-`echo`  
-`geometry noautoz units angstrom`  
-`  symmetry c1 `  
-`  Zn -1.89334 -0.72741 -0.00000 `  
-`  O -0.20798 0.25012 0.00000  `  
-`  H -0.14200 1.24982 -0.00000 `  
-`  H 0.69236 -0.18874 -0.00000`  
-`end`  
-`basis "ao basis" `  
-`  O library 6-31G `  
-`  Zn library 6-31G `  
-`  H library 6-31G `  
-`  bqO library O 6-31G `  
-`  bqZn library Zn 6-31G `  
-`  bqH library H 6-31G`  
-`end`  
-`charge 2`  
-`scf; direct; end`  
-`mp2; end`  
-`bsse `  
-` mon metal 1 `  
-` charge 2 `  
-` input_wghost "scf\; maxiter 200\; end" `  
-` mon water 2 3 4`  
-`end`  
-`task mp2 optimize`
+```
+title dimer  
+start dimer  
+geometry units angstrom  
+  symmetry c1   
+  F 1.47189 2.47463 -0.00000   
+  H 1.47206 3.29987 0.00000    
+  F 1.46367 -0.45168 0.00000   
+  H 1.45804 0.37497 -0.00000  
+end  
+basis "ao basis"   
+  F library 6-31G   
+  H library 6-31G   
+  bqF library F 6-31G   
+  bqH library H 6-31G 
+end
+dft; xc slater 1.0 vwn_5 1.0; direct; end 
+bsse 
+ mon first 1 2   
+ mon second 3 4  
+end
+task dft energy
+```
+Changing maxiter for a specific monomer: (Zn<sup>2+</sup>(H<sub>2</sub>O))
+```
+title znwater  
+start znwater  
+echo  
+geometry noautoz units angstrom  
+  symmetry c1   
+  Zn -1.89334 -0.72741 -0.00000   
+  O -0.20798 0.25012 0.00000    
+  H -0.14200 1.24982 -0.00000   
+  H 0.69236 -0.18874 -0.00000  
+end  
+basis "ao basis"   
+  O library 6-31G   
+  Zn library 6-31G   
+  H library 6-31G   
+  bqO library O 6-31G   
+  bqZn library Zn 6-31G   
+  bqH library H 6-31G  
+end  
+charge 2  
+scf; direct; end  
+mp2; end  
+bsse   
+ mon metal 1   
+ charge 2   
+ input_wghost "scf\; maxiter 200\; end"   
+ mon water 2 3 4  
+end  
+task mp2 optimize
+```

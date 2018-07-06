@@ -13,17 +13,17 @@ additional platforms and better environment variables over time.
 
 When dealing with source from a ***NWChem release*** (6.8 in this
 example)
-
-`  % setenv NWCHEM_TOP  *<your path>*/nwchem-6.8`
-
+```
+export NWCHEM_TOP=<your path>/nwchem-6.8
+```
 when using the ***NWChem development*** source
-
-`  % setenv NWCHEM_TOP  *<your path>*/nwchem`
-
+```
+export NWCHEM_TOP=<your path>/nwchem
+```
   - $NWCHEM\_TARGET defines your target platform, e.g.
-
-`  % setenv NWCHEM_TARGET LINUX64`
-
+```
+export NWCHEM_TARGET=LINUX64
+```
 <table>
 <caption>The platforms that available are:</caption>
 <tbody>
@@ -98,9 +98,9 @@ Windows</p></td>
 
   - **ARMCI\_NETWORK** must be defined in order to achieve best
     performance on high performance networks, e.g.
-
-`  % setenv ARMCI_NETWORK OPENIB`
-
+```
+export ARMCI_NETWORK=OPENIB
+```
 For a single processor system, this environment variable does not have
 to be defined.
 
@@ -210,19 +210,19 @@ can be used to extract the values of LIBMPI, MPI\_LIB and MPI\_INCLUDE
 
 E.g. for MPICH2, this might look
 like:
-
-`$ mpif90 -show`  
-`f95 -I/usr/local/mpich2.141p1/include -I/usr/local/mpich2.141p1/include -L/usr/local/mpich2.141p1/lib \`  
-`-lmpichf90 -lmpichf90 -lmpich -lopa -lmpl -lrt -lpthread`
-
+```
+$ mpif90 -show
+f95 -I/usr/local/mpich2.141p1/include -I/usr/local/mpich2.141p1/include -L/usr/local/mpich2.141p1/lib \
+-lmpichf90 -lmpichf90 -lmpich -lopa -lmpl -lrt -lpthread
+```
 The corresponding environment variables
 are
-
-`  % setenv USE_MPI y`  
-`  % setenv LIBMPI "-lmpich -lopa -lmpl -lpthread -lmpichf90 -lfmpich -lmpich"`  
-`  % setenv MPI_LIB /usr/local/mpich2.141p1/lib `  
-`  % setenv MPI_INCLUDE '/usr/local/mpich2.141p1/include`
-
+```
+  % setenv USE_MPI y
+  % setenv LIBMPI "-lmpich -lopa -lmpl -lpthread -lmpichf90 -lfmpich -lmpich"
+  % setenv MPI_LIB /usr/local/mpich2.141p1/lib 
+  % setenv MPI_INCLUDE '/usr/local/mpich2.141p1/include
+```
 Note: a script is available in NWChem 6.5 to extract the environment variables listed above
 
 $NWCHEM\_TOP/contrib/distro-tools/getmpidefs\_nwchem
@@ -264,17 +264,19 @@ Note:
 
 When MPI is used, the appropriate MPI run command should be used to
 start an NWChem calculation, e.g.
-
-`  % mpirun -np 8 $NWCHEM_TOP/bin/${NWCHEM_TARGET}}/nwchem h2o.nw`
-
+```
+  % mpirun -np 8 $NWCHEM_TOP/bin/${NWCHEM_TARGET}}/nwchem h2o.nw
+```
 When all nodes are connected via shared memory and the ch\_shmem version
 of MPICH is installed and used, NWChem can be called directly, e.g.
-
-`  % $NWCHEM_TOP/bin/${NWCHEM_TARGET}/nwchem -np 8 h2o.nw`
-
+```
+  % $NWCHEM_TOP/bin/${NWCHEM_TARGET}/nwchem -np 8 h2o.nw
+```
   - **NWCHEM\_MODULES** defines the modules to be compiled, e.g.
-
-`  % setenv NWCHEM_MODULES "all python"`
+```
+export NWCHEM_MODULES="all python"
+```
+The following modules are available:
 
 |            |                               |
 | ---------- | ----------------------------- |
@@ -285,7 +287,6 @@ of MPICH is installed and used, NWChem can be called directly, e.g.
 | md         | MD only build                 |
 |  |
 
-The following modules are available:
 
 Note that additional environment variables need to be defined to specify
 the location of the Python libraries, when the python module is
@@ -297,24 +298,24 @@ specifics.
 **USE\_NOFSCHECK** can be set to avoid NWChem creating files for each
 process when testing the size of the scratch directory (a.k.a. creation
 of junk files), e.g.
-
-`  % setenv USE_NOFSCHECK TRUE`
-
+```
+export USE_NOFSCHECK=TRUE
+```
 **USE\_NOIO** can be set to avoid NWChem 6.5 doing I/O for the ddscf,
 mp2 and ccsd modules (it automatically sets USE\_NOFSCHECK, too). It is
 strongly recommended on large clusters or supercomputers or any computer
 lacking any fast and large local filesystem.
-
-`  % setenv USE_NOIO TRUE`
-
+```
+export USE_NOIO=TRUE
+```
 **LIB\_DEFINES** can be set to pass additional defines to the C
 preprocessor (for both Fortran and C), e.g.
-
-`  % setenv LIB_DEFINES -DDFLT_TOT_MEM=16777216`
-
+```
+export LIB_DEFINES=-DDFLT_TOT_MEM=16777216
+```
 Note: -DDFLT\_TOT\_MEM sets the default dynamic memory available for
 NWChem to run, where the units are in doubles. Instead of manually
-defining these one can optionally use the "getmem.nwchem" script in the
+defining these one can optionally use the `getmem.nwchem` script in the
 $NWCHEM\_TOP/contrib directory. This script should be run after an
 initial build of the binary has been completed. The script will assess
 memory availability and make an educated guess, recompile the
@@ -322,9 +323,9 @@ appropriate files and relink.
 
 **MRCC\_METHODS** can be set to request the multireference coupled
 cluster capability to be included in the code, e.g.
-
-`  % setenv MRCC_METHODS TRUE`
-
+```
+export MRCC_METHODS=TRUE
+```
 **Setting Python environment variables**
 
 Python programs may be embedded into the NWChem input and used to
@@ -336,28 +337,28 @@ installation and testing. NWChem has been tested with Python versions
 
 The following environment variables need to be set when compiling with
 Python:
-
-`  % setenv PYTHONHOME /usr/local/Python-1.5.1`  
-`  % setenv PYTHONVERSION 1.5`
-
+```
+export PYTHONHOME=/usr/local/Python-1.5.1
+export PYTHONVERSION=1.5
+```
 Note that the third number in the version should not be kept: 2.2.3
 should be set as 2.2
 
 **<span style="color:#FF0000">New in NWChem 6.6</span>**: By setting the
 env. variable
-
-`USE_PYTHONCONFIG=Y `
-
+```
+USE_PYTHONCONFIG=Y
+```
 all the linking bits should be picked up, therefore you will not need to
 set any further env .variable other than PYTHONHOME and PYTHONVERSION
 (and safely ignore the rest of this paragraph)
 
 The following env. variables might be required
-
-`  % setenv USE_PYTHON64  y`  
-`  % setenv PYTHONLIBTYPE so`  
-`  % setenv PYTHONCONFIGDIR config-x86_64-linux-gnu`
-
+```
+export USE_PYTHON64= y
+export PYTHONLIBTYPE=so
+export PYTHONCONFIGDIR=config-x86_64-linux-gnu
+```
 USE\_PYTHON64 is needed on platforms were the Python library is found
 under the /usr/lib64 tree instead of /usr/lib (e.g. 64-bit RHEL6:
 /usr/lib64/python2.6/config/libpython2.6.so).
@@ -382,9 +383,9 @@ By default NWChem uses its own basic linear algebra subroutines (BLAS).
 To include faster BLAS routines, the environment variable BLASOPT needs
 to be set before building the code. For example, with
 ATLAS
-
-`  % setenv BLASOPT "-L/usr/local/ATLAS -llapack -lf77blas -latlas"`
-
+```
+export BLASOPT="-L/usr/local/ATLAS -llapack -lf77blas -latlas"
+```
 |             |                                                                                                                 |
 | ----------- | --------------------------------------------------------------------------------------------------------------- |
 | OpenBLAS    | <https://github.com/xianyi/OpenBLAS>                                                                            |
@@ -400,11 +401,11 @@ hardware include:
 NWChem can also take advantage of the [ScaLAPACK
 library](http://www.netlib.org/scalapack/) if it is installed on your
 system. The following environment variables need to be set:
-
-`  % setenv USE_SCALAPACK y`  
+```
+export USE_SCALAPACK=y
   
-`  % setenv SCALAPACK "location of Scalapack and BLACS library"`
-
+export SCALAPACK="location of Scalapack and BLACS library"
+```
 WARNING: In the case of 64-bit platforms, most vendors optimized BLAS
 libraries cannot be used. This is due to the fact that while NWChem uses
 64-bit integers (i.e. integer\*8) on 64-bit platforms, most of the
@@ -413,12 +414,12 @@ for the ScaLAPACK libraries, which internally use 32-bit integers.
 
 A method is now available to link against the libraries mentioned above,
 using the following procedure:
-
-`  % cd $NWCHEM_TOP/src`  
-`  % make clean`  
-`  % make 64_to_32`  
-`  % make USE_64TO32=y  BLASOPT=" optimized BLAS"`
-
+```
+   cd $NWCHEM_TOP/src
+   make clean
+   make 64_to_32
+   make USE_64TO32=y  BLASOPT=" optimized BLAS"
+```
 E.g., for IBM64 this looks like
 
 `  % make  USE_64TO32=y  BLASOPT="-lessl -lmass"`
@@ -429,13 +430,13 @@ Notes:
     is accomplished by compiling the GotoBLAS2 library after having by
     edited the GotoBLAS2 Makefile.rule file and un-commenting the line
     containing the INTERFACE64 definition. In other words, the line
-
-`          #INTERFACE64 = 1`  
-  
-`                needs to be changed to`  
-  
-`          INTERFACE64 = 1`
-
+```
+          #INTERFACE64 = 1
+```
+                needs to be changed to
+```
+          INTERFACE64 = 1
+```
   - ACML and MKL can support 64-bit integers if the appropriate library
     is chosen. For MKL, one can choose the ILP64 Version of Intel® MKL
     and the correct recipe can be extracted from the website
@@ -511,7 +512,7 @@ and COPTIMIZE have been tested by the NWChem developers (using the
 internal QA suites, among others), while any modification might produce
 incorrect results.
 
-# How-to: Build\_nwchem script
+# How-to: Build\_nwchem script (unsupported)
 
 The build\_nwchem script is an auto-compile tool. It guesses the
 configuration of your machine based on the results of a number of tests
@@ -523,11 +524,11 @@ requirement to use the script is that the MPI compiler wrappers (e.g.
 mpif90, mpicc and mpiCC) should be in your path, and that if your
 machine uses the "module" software you should have all modules you want
 to use loaded. If these requirements are met then simply run
-
-` % cd `<your path>`/nwchem`  
-` % ./contrib/distro-tools/build_nwchem | tee build_nwchem.log`
-
-In the file build\_nwchem.log you will find under "Building NWChem" a
+```
+% cd $NWCHEM_TOP  
+ % ./contrib/distro-tools/build_nwchem | tee build_nwchem.log
+```
+In the file build_nwchem.log you will find under "Building NWChem" a
 report on what platform the script thinks you are using.
 
 In addition to compiling the code the build\_nwchem script now also
@@ -550,40 +551,40 @@ This is particularly convenient when developing.
 
   - **Common environmental variables for building in serial or in
     parallel with MPI**
-
-` % setenv NWCHEM_TOP `<your path>`/nwchem`  
-` % setenv NWCHEM_TARGET LINUX64`  
-` % setenv NWCHEM_MODULES  all`
-
+```
+ % setenv NWCHEM_TOP <your path>/nwchem  
+ % setenv NWCHEM_TARGET LINUX64  
+ % setenv NWCHEM_MODULES  all
+```
   - **Common environmental variables for building with MPI**
 
 The following environment variables need to be set when NWChem is
 compiled with
 MPI:
+```
+% setenv USE_MPI y  
+% setenv USE_MPIF y  
+% setenv USE_MPIF4 y
 
-` % setenv USE_MPI y`  
-` % setenv USE_MPIF y`  
-` % setenv USE_MPIF4 y`
-
-` % setenv MPI_LOC `<your path>`/openmpi-1.4.3  (for example, if you are using OpenMPI)`  
-` % setenv MPI_LIB `<your path>`/openmpi-1.4.3/lib`  
-` % setenv MPI_INCLUDE `<your path>`/openmpi-1.4.3/include`  
-` % setenv LIBMPI "-lmpi_f90 -lmpi_f77 -lmpi -lpthread"`
-
+ % setenv MPI_LOC <your path>/openmpi-1.4.3  (for example, if you are using OpenMPI)  
+ % setenv MPI_LIB <your path>/openmpi-1.4.3/lib  
+ % setenv MPI_INCLUDE <your path>/openmpi-1.4.3/include  
+ % setenv LIBMPI "-lmpi_f90 -lmpi_f77 -lmpi -lpthread"
+```
 **New in NWChem 6.6:** If the location of the mpif90 command is part of
 your PATH env. variable, NWChem will figure out the values of LIBMPI,
-MPI\_LIB and MPI\_INCLUDE (if they are not set). Therefore, we recommend
-not to set LIBMPI, MPI\_LIB and MPI\_INCLUDE and add the location of
+MPI_LIB and MPI_INCLUDE (if they are not set). Therefore, we recommend
+not to set LIBMPI, MPI_LIB and MPI_INCLUDE and add the location of
 mpif90 to the PATH variable, instead.
 
   - **Compiling the code once all variables are set**
-
-`  % cd $NWCHEM_TOP/src`  
+```
+  % cd $NWCHEM_TOP/src  
   
-`  % make nwchem_config`  
+  % make nwchem_config
   
-`  % make FC=gfortran >& make.log`
-
+  % make FC=gfortran >& make.log
+```
 #### NWChem 6.6 on Ubuntu 14.04 (Trusty Tahr)
 
 These instruction are likely to work (with minor modifications) on all
@@ -595,22 +596,22 @@ required:
 `python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make `
 
   - Settings
-
-`export USE_MPI=y`  
-`export NWCHEM_TARGET=LINUX64`  
-`export USE_PYTHONCONFIG=y`  
-`export PYTHONVERSION=2.7`  
-`export PYTHONHOME=/usr`  
-`export BLASOPT="-lopenblas -lpthread -lrt"`  
-`export BLAS_SIZE=4`  
-`export USE_64TO32=y`
-
+```
+export USE_MPI=y  
+export NWCHEM_TARGET=LINUX64  
+export USE_PYTHONCONFIG=y  
+export PYTHONVERSION=2.7  
+export PYTHONHOME=/usr 
+export BLASOPT="-lopenblas -lpthread -lrt"  
+export BLAS_SIZE=4  
+export USE_64TO32=y
+```
   - Compilation steps
-
-`make nwchem_config NWCHEM_MODULES="all python"`  
-`make 64_to_32`  
-`make`
-
+```
+make nwchem_config NWCHEM_MODULES="all python"
+make 64_to_32
+make
+```
 #### NWChem 6.6 on Fedora 22
 
   - Packages
@@ -637,7 +638,12 @@ required:
 `make`
 
 #### NWChem 6.8 on Centos 7.1/Fedora 27
-
+Once you have added the [EPEL
+repository](https://fedoraproject.org/wiki/EPEL) to your Centos/Fedora/RedHat
+installation, you can have a more efficient NWChem build. 
+```
+sudo rpm -Uvh http://download.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+```
   - Packages
 required:
 
@@ -645,28 +651,28 @@ required:
 `elpa-openmpi-devel tcsh openssh-clients which tar`
 
   - Settings
-
-`export USE_MPI=y`  
-`export NWCHEM_TARGET=LINUX64`  
-`export USE_PYTHONCONFIG=y`  
-`export PYTHONVERSION=2.7`  
-`export PYTHONHOME=/usr`  
-`export USE_64TO32=y`  
-`export BLAS_SIZE=4`  
-`export BLASOPT="-lopenblas -lpthread -lrt"`  
-`export SCALAPACK_SIZE=4`  
-`export SCALAPACK="-L/usr/lib64/openmpi/lib -lscalapack "`  
-`export ELPA="-I/usr/lib64/gfortran/modules/openmpi -L/usr/lib64/openmpi/lib -lelpa"`  
-`export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib/:$LD_LIBRARY_PATH`  
-`export PATH=/usr/lib64/openmpi/bin/:$PATH`
-
+```
+export USE_MPI=y
+export NWCHEM_TARGET=LINUX64  
+export USE_PYTHONCONFIG=y  
+export PYTHONVERSION=2.7  
+export PYTHONHOME=/usr  
+export USE_64TO32=y  
+export BLAS_SIZE=4  
+export BLASOPT="-lopenblas -lpthread -lrt"  
+export SCALAPACK_SIZE=4  
+export SCALAPACK="-L/usr/lib64/openmpi/lib -lscalapack "  
+export ELPA="-I/usr/lib64/gfortran/modules/openmpi -L/usr/lib64/openmpi/lib -lelpa"  
+export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib/:$LD_LIBRARY_PATH 
+export PATH=/usr/lib64/openmpi/bin/:$PATH
+```
   - Compilation steps
-
-`cd $NWCHEM_TOP/src`  
-`make nwchem_config NWCHEM_MODULES="all python"`  
-`make 64_to_32`  
-`make`
-
+```
+cd $NWCHEM_TOP/src  
+make nwchem_config NWCHEM_MODULES="all python"  
+make 64_to_32  
+make
+```
 #### NWChem 6.6 on RedHat 6
 
   - Packages required:
@@ -674,21 +680,21 @@ required:
 `python-devel gcc-gfortran openmpi-devel  tcsh make`
 
   - Settings
-
-`export USE_MPI=y`  
-`export NWCHEM_TARGET=LINUX64`  
-`export USE_PYTHONCONFIG=y`  
-`export PYTHONVERSION=2.6`  
-`export PYTHONHOME=/usr`  
-`export USE_INTERNALBLAS=y`  
-`export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib/:$LD_LIBRARY_PATH`  
-`export PATH=/usr/lib64/openmpi/bin/:$PATH`
-
+```
+export USE_MPI=y
+export NWCHEM_TARGET=LINUX64
+export USE_PYTHONCONFIG=y
+export PYTHONVERSION=2.6
+export PYTHONHOME=/usr
+export USE_INTERNALBLAS
+export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib/:$LD_LIBRARY_PATH
+export PATH=/usr/lib64/openmpi/bin/:$PATH
+```
   - Compilation steps
-
-`make nwchem_config NWCHEM_MODULES="all python"`  
-`make`
-
+```
+make nwchem_config NWCHEM_MODULES="all python"
+make
+```
 #### NWChem 6.6 on RedHat 6 & EPEL repository
 
 Once you have added the [EPEL
@@ -759,13 +765,13 @@ required:
     choosing, say /Users/johndoe/nwchem
   - Install Homebrew as described at
 <http://brew.sh>
-
-`ruby -e "$(curl -fsSL `<https://raw.github.com/Homebrew/homebrew/go/install>`)"`
-
+```
+ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+```
   - Use Homebrew to install mpich2
-
-`brew install mpich2`
-
+```
+brew install mpich2
+```
   - As usual, set the env. variables
 
 `setenv USE_MPI y`  
@@ -832,27 +838,27 @@ required:
 ```
 
   - Use Homebrew to install open-mpi
-
-`brew install open-mpi`
-
+```
+brew install open-mpi
+```
   - As usual, set the env. variables
-
-`setenv USE_MPI y`  
-`setenv NWCHEM_TARGET MACX64`  
-`setenv NWCHEM_TOP /Users/johndoe/nwchem`  
-`setenv USE_INTERNALBLAS=y`
-
+```
+export USE_MPI=y  
+export NWCHEM_TARGET=MACX64  
+export NWCHEM_TOP=/Users/johndoe/nwchem  
+export USE_INTERNALBLAS=y
+```
   - **Important**: set the following env. variable (GA will not compile
     otherwise)
-
-`setenv CFLAGS_FORGA "-DMPICH_NO_ATTR_TYPE_TAGS"`
-
+```
+export CFLAGS_FORGA "-DMPICH_NO_ATTR_TYPE_TAGS"
+```
   - Go to your source directory, configure, and compile
-
-` cd /Users/johndoe/nwchem/src`  
-` make nwchem_config`  
-` make`
-
+```
+ cd /Users/johndoe/nwchem/src  
+ make nwchem_config`  
+ make
+```
 **WARNING:** Please do not use the Mac OS X default BLAS and LAPACK
 libraries available (or brew's veclibfort), since they are causing
 NWChem to produce erroneous results
@@ -1051,39 +1057,37 @@ XC40](https://www.nersc.gov/users/computational-systems/cori), as of
 November 6th 2016, when using Intel compilers (i.e. after issuing the
 commands `module swap PrgEnv-gnu
 PrgEnv-intel`).
-
-`export NWCHEM_TARGET=LINUX64`  
-`export USE_MPI=y`  
-`export NWCHEM_TARGET=LINUX64`  
-`export ARMCI_NETWORK=MPI-PR`  
-`export USE_MPI=y`  
-`export USE_SCALAPACK=y`  
-`export SCALAPACK="-L$MKLROOT/lib/intel64 -lmkl_scalapack_ilp64 -lmkl_intel_ilp64 -lmkl_core -lmkl_sequential \\`  
-`-lmkl_blacs_intelmpi_ilp64 -lpthread -lm"`  
-`export SCALAPACK_SIZE=8`  
-`export SCALAPACK_LIB="$SCALAPACK"`  
-`export BLAS_SIZE=8`  
-`export BLASOPT="-L$MKLROOT/lib/intel64 -lmkl_intel_ilp64 -lmkl_core -lmkl_sequential -lmkl_core -liomp5 -lpthread -ldmapp -lm"`  
-`export USE_NOIO=y`  
-`export CRAYPE_LINK_TYPE=dynamic`
-
+```
+export NWCHEM_TARGET=LINUX64  
+export USE_MPI=y  
+export NWCHEM_TARGET=LINUX64  
+export ARMCI_NETWORK=MPI-PR  
+export USE_MPI=y  
+export USE_SCALAPACK=y  
+export SCALAPACK="-L$MKLROOT/lib/intel64 -lmkl_scalapack_ilp64 -lmkl_intel_ilp64 -lmkl_core -lmkl_sequential \  
+-lmkl_blacs_intelmpi_ilp64 -lpthread -lm"  
+export SCALAPACK_SIZE=8  
+export SCALAPACK_LIB="$SCALAPACK" 
+export BLAS_SIZE=8` 
+export BLASOPT="-L$MKLROOT/lib/intel64 -lmkl_intel_ilp64 -lmkl_core -lmkl_sequential -lmkl_core -liomp5 -lpthread -ldmapp -lm"  
+export USE_NOIO=y  
+export CRAYPE_LINK_TYPE=dynamic
+```
 To compile
-
-`make nwchem_config`  
-`make FC=ftn`
-
+```
+make nwchem_config
+make FC=ftn
+```
 The following env. variables needs to added to the batch queue
 submission script
-
-`MPICH_GNI_MAX_EAGER_MSG_SIZE=16384 `  
-`MPICH_GNI_MAX_VSHORT_MSG_SIZE=10000 `  
-`MPICH_GNI_MAX_EAGER_MSG_SIZE=131072 `  
-`MPICH_GNI_NUM_BUFS=300 `  
-`MPICH_GNI_NDREG_MAXSIZE=16777216 `  
-`MPICH_GNI_MBOX_PLACEMENT=nic `  
-`MPICH_GNI_LMT_PATH=disabled `  
-`COMEX_MAX_NB_OUTSTANDING=6`
-
+```
+MPICH_GNI_MAX_VSHORT_MSG_SIZE=10000  
+MPICH_GNI_MAX_EAGER_MSG_SIZE=98304  
+MPICH_GNI_NUM_BUFS=300  
+MPICH_GNI_NDREG_MAXSIZE=16777216 
+MPICH_GNI_MBOX_PLACEMENT=nic
+COMEX_MAX_NB_OUTSTANDING=6
+```
 # How-to: Intel Xeon Phi
 
 This section describes both the newer KNL and older KNC hardware, in
@@ -1386,7 +1390,7 @@ Infiniband clusters are:
 `  % make >& make.log`
 
 # How-to: Windows Platforms
-
+## MingW
 The current recommended approach for building a NWChem binary for a
 Windows platform is to build with the
 [MinGW/Mingw32](http://www.mingw.org/) environment. MinGW can be
@@ -1412,33 +1416,46 @@ URL
 Once Mpich is installed, you should copy the installation files to a
 different location to avoid the failure of the tools compilation. You
 can use the following command
-
-`% cp -rp /c/Program\ Files\ `\(x86\)`/MPICH2/ ~/`
-
-You mght want to install Python, too, by using the following
+```
+% cp -rp /c/Program\ Files\ \(x86\)/MPICH2/ ~/
+```
+You might want to install Python, too, by using the following
 installation file
 
 <https://www.python.org/ftp/python/2.7.8/python-2.7.8.msi>
 
 Next, you need to set the env.
-
-`% export NWCHEM_TOP=~/nwchem-6.5`  
-`% export NWCHEM_TARGET=LINUX`  
-`% export USE_MPI=y`  
-`% export MPI_LOC=~/MPICH2`  
-`% export MPI_INCLUDE=$MPI_LOC/include`  
-`% export MPI_LIB=$MPI_LOC/lib`  
-`% export LIBMPI="-lfmpich2g -lmpi"`  
-`% export PYTHONHOME=/c/Python27/`  
-`% export PYTHONVERSION=27`  
-`% export DEPEND_CC=gcc`
-
+```
+% export NWCHEM_TOP=~/nwchem-6.8  
+% export NWCHEM_TARGET=LINUX
+% export USE_MPI=y  
+% export MPI_LOC=~/MPICH2  
+% export MPI_INCLUDE=$MPI_LOC/include  
+% export MPI_LIB=$MPI_LOC/lib  
+% export LIBMPI="-lfmpich2g -lmpi"  
+% export PYTHONHOME=/c/Python27/  
+% export PYTHONVERSION=27  
+% export DEPEND_CC=gcc
+% export USE_INTERNALBLAS=y
+% export NWCHEM_MODULES=all
+```
 Then, you can start the compilation by typing
+```
+% cd $NWCHEM_TOP/src  
+% make nwchem_config  
+% make FC=gfortran DEPEND_CC=gcc
+```
+## WSL on Windows 10
+A good alternative only on Windows 10 is **Windows Subsystem for Linux** (WSL). 
+**WSL** allows you to obtain a functional command line Linux 64-bit NWChem environment, either by compiling the NWChem code from scratch or by using the Ubuntu precompiled NWChem package. Here is a link to the install guide
 
-`% cd $NWCHEM_TOP/src`  
-`% make nwchem_config`  
-`% make FC=gfortran DEPEND_CC=gcc`
+https://msdn.microsoft.com/en-us/commandline/wsl/install_guide
 
+Once Ubuntu is installed, the quickest method to install NWChem is by fetching the Ubuntu NWChem package by typing
+```
+sudo apt install nwchem
+``` 
+## Cygwin
 As an unsupported alternative, Cygwin might be used with make, perl, and
 gcc/gfortran version 4 installed (however several Cygwin versions are
 not a good match for NWChem installation, for example cygwin version

@@ -1,3 +1,106 @@
+##### Contents  
+
+* [1 Pseudopotential plane-wave density functional theory (NWPW)](#pseudopotential-plane-wave-density-functional-theory-nwpw "wikilink")
+   - [1.1 PSPW Tasks - Gamma Point Calculations](#pspw-tasks---gamma-point-calculations "wikilink")
+      - [1.1.1 PAW Potentials](#paw-potentials "wikilink") 
+         - [1.1.1.1 PAW Implementation Notes](#paw-implementation-notes "wikilink")
+      - [1.1.2 Exchange-Correlation Potentials](#exchange-correlation-potentials "wikilink")
+         - [1.1.2.1 DFT + U Corrections](#dft-+-u-corrections "wikilink")
+         - [1.1.2.2 Grimme Dispersion Corrections](#grimme-dispersion-corrections "wikilink")
+         - [1.1.2.3 Using Exchange-Correlation Potentials Available in the DFT Module](#using-exchange-correlation-potentials-available-in-the-dft-module "wikilink")
+         - [1.1.2.4 Exact Exchange](#exact-exchange "wikilink")
+         - [1.1.2.5 Self-Interaction Corrections](#self-interaction-corrections "wikilink")
+      - [1.1.3 Wannier](#wannier "wikilink")
+      - [1.1.4 Mulliken Analysis](#mulliken-analysis "wikilink")
+      - [1.1.5 Density of States](#density-of-states "wikilink")
+      - [1.1.6 Projected Density of States](#projected-density-of-states "wikilink")
+      - [1.1.7 Point Charge Analysis](#point-charge-analysis "wikilink")
+      - [1.1.8 PSPW_DPLOT - Generate Gaussian Cube Files](#pspw_dplot---generate-gaussian-cube-files "wikilink")
+   - [1.2 Band Tasks - Multiple k-point Calculations](#band-tasks---multiple-k-point-calculations "wikilink")
+      - [1.2.1 Brillouin Zone](#brillouin-zone "wikilink")
+         - [1.2.1.1 Band Structure Paths](#band-structure-paths "wikilink")
+         - [1.2.1.2 Special Points of Different Space Groups (Conventional Cells)](#special-points-of-different-space-groups-conventional-cells "wikilink")
+      - [1.2.2 Screened Exchange](#screened-exchange "wikilink")
+      - [1.2.3 Density of States and Projected Density of States](#density-of-states-and-projected-density-of-states "wikilink")
+      - [1.2.4 Two-Component Wavefunctions (Spin-Orbit ZORA)](#two-component-wavefunctions-spin-orbit-zora "wikilink")
+      - [1.2.5 BAND_DPLOT - Generate Gaussian Cube Files](#band_dplot---generate-gaussian-cube-files "wikilink")
+   - [1.3 Car-Parrinello](#car-parrinello "wikilink")
+      - [1.3.1 Adding Geometry Constraints to a Car-Parrinello Simulation](#adding-geometry-constraints-to-a-car-parrinello-simulation "wikilink")
+      - [1.3.2 Car-Parrinello Output Datafiles](#car-parrinello-output-datafiles "wikilink")
+         - [1.3.2.1 XYZ motion file](#xyz-motion-file "wikilink")
+         - [1.3.2.2 ION_MOTION motion file](#ion_motion-motion-file "wikilink")
+         - [1.3.2.3 EMOTION motion file](#emotion-motion-file "wikilink")
+         - [1.3.2.4 HMOTION motion file](#hmotion-motion-file "wikilink")
+         - [1.3.2.5 EIGMOTION motion file](#eigmotion-motion-file "wikilink")
+         - [1.3.2.6 OMOTION motion file](#omotion-motion-file "wikilink")
+   - [1.4 Born-Oppenheimer Molecular Dynamics](#born-oppenheimer-molecular-dynamics "wikilink")
+   - [1.5 Metropolis Monte-Carlo](#metropolis-monte-carlo  "wikilink")
+   - [1.6 Free Energy Simulations](#free-energy-simulations "wikilink")
+      - [1.6.1 MetaDynamics](#metaDynamics "wikilink")
+         - [1.6.1.1 Input](#Input "wikilink")
+      - [1.6.2 TAMD - Temperature Accelerated Molecular Dynamics](#tamd---temperature-accelerated-molecular-dynamics "wikilink")
+         - [1.6.2.1 Input](#input "wikilink")
+      - [1.6.3 Collective Variables](#collective-variables "wikilink")
+         - [1.6.3.1 Bond Distance Collective Variable](#bond-distance-collective-variable "wikilink")
+         - [1.6.3.2 Angle Collective Variable](#angle-collective-variable "wikilink")
+         - [1.6.3.3 Coordination Collective Variable](#coordination-collective-variable "wikilink")
+         - [1.6.3.4 N-Plane Collective Variable](#n-plane-collective-variable "wikilink")
+         - [1.6.3.5 User defined Collective Variable](#user-defined-collective-variable "wikilink")
+   - [1.7 Extended X-Ray Absorption Fine Structure (EXAFS) - Integration with FEFF6L](#extended-x-ray-absorption-fine-structure-exafs---integration-with-feff6l "wikilink")
+   - [1.8 Frozen Phonon Calculations](#frozen-phonon-calculations "wikilink")
+   - [1.9 Steepest Descent](#steepest-descent "wikilink")
+   - [1.10 Simulation Cell](#simulation-cell "wikilink")
+   - [1.11 Unit Cell Optimization](#unit-cell-optimization "wikilink")
+   - [1.12 SMEAR - Fractional Occupation of the Molecular Orbitals](#smear---fractional-occupation-of-the-molecular-orbitals "wikilink")
+   - [1.13 Spin Penalty Functions](#spin-penalty-functions "wikilink")
+   - [1.14 AIMD/MM (QM/MM)](#aimdmm-qmmm "wikilink")
+   - [1.15 PSP_GENERATOR](#psp_generator "wikilink")
+      - [1.15.1 ATOMIC_FILLING Block](#atomic_filling-block  "wikilink")
+      - [1.15.2 CUTOFF](#cutoff  "wikilink")
+      - [1.15.3 SEMICORE_RADIUS](#semicore_radius  "wikilink")
+   - [1.16 PAW Tasks - Legacy Implementation](#paw_tasks---legacy-implementation  "wikilink")
+   - [1.17 Pseudopotential and PAW basis Libraries](#pseudopotential-and-paw-basis-libraries  "wikilink")
+   - [1.18 NWPW RTDB Entries and Miscellaneous DataFiles](#nwpw-rtdb-entries-and-miscellaneous-dataFiles  "wikilink")
+      - [1.18.1 Ion Positions](#ion-positions  "wikilink")
+      - [1.18.2 Ion Velocities](#ion-velocities  "wikilink")
+      - [1.18.3 Wavefunction Datafile](#wavefunction-datafile  "wikilink")
+      - [1.18.4 Velocity Wavefunction Datafile](#velocity-wavefunction-datafile  "wikilink")
+      - [1.18.5 Formatted Pseudopotential Datafile](#formatted-pseudopotential-datafile  "wikilink")
+      - [1.18.6 One-Dimensional Pseudopotential Datafile](#one-dimensional-pseudopotential-datafile  "wikilink")
+   - [1.19 Car-Parrinello Scheme for Ab Initio Molecular Dynamics](#car-parrinello-scheme-for-ab-initio-molecular-dynamics  "wikilink")
+      - [1.19.1 Verlet Algorithm for Integration](#verlet-algorithm-for-integration  "wikilink")
+      - [1.19.2 Constant Temperature Simulations: Nose-Hoover Thermostats](#constant-temperature-simulations-nose-hoover-thermostats  "wikilink")
+   - [1.20 NWPW Tutorial 1: S2 dimer examples with PSPW](#nwpw-tutorial-1-s2-dimer-examples-with-pspw  "wikilink")
+      - [1.20.1 Total energy of S2 dimer with LDA approximation](#total-energy-of-s2-dimer-with-lda-approximation  "wikilink")
+      - [1.20.2 Structural optimization of S2 dimer with LDA approximation](#structural-optimization-of-s2-dimer-with-lda-approximation  "wikilink")
+      - [1.20.3 Frequency calculation of S2 dimer with LDA approximation](#frequency-calculation-of-s2-dimer-with-lda-approximation  "wikilink")
+      - [1.20.4 Ab initio molecular dynamics simulation (Car-Parrinello) of S2 dimer using the LDA approximation](#ab-initio-molecular-dynamics-simulation-car-parrinello-of-s2-dimer-using-the-lda-approximation  "wikilink")
+      - [1.20.5 Ab initio molecular dynamics simulation (Born-Oppenheimer) of S2 dimer using the LDA approximation](#ab-initio-molecular-dynamics-simulation-born-oppenheimer-of-s2-dimer-using-the-lda-approximation  "wikilink")
+   - [1.21 NWPW Tutorial 2: Using PSPW Car-Parrinello Simulated Annealing Simulations to Optimize Structures](#nwpw-tutorial-2:-using-pspw-car-parrinello-simulated-annealing-simulations-to-optimize-structures  "wikilink")
+      - [1.21.1 Simulated Annealing Using Constant Energy Simulation](#simulated-annealing-using-constant-energy-simulation  "wikilink")
+      - [1.21.2 Simulated Annealing Using Constant Temperature Simulation](#simulated-annealing-using-constant-temperature-simulation  "wikilink")
+   - [1.22 NWPW Tutorial 3: using isodesmic reaction energies to estimate gas-phase thermodynamics](#nwpw-tutorial-3:-using-isodesmic-reaction-energies-to-estimate-gas-phase-thermodynamics  "wikilink")
+   - [1.23 NWPW Tutorial 4: AIMD/MM simulation of CCl4 + 64 H2O](#nwpw-tutorial-4:-aimdmm-simulation-of-ccl4-+-64-h2o  "wikilink")
+   - [1.24 NWPW Tutorial 5: Optimizing the Unit Cell and Geometry of Diamond](#nwpw-tutorial-5:-optimizing-the-unit-cell-and-geometry-of-diamond  "wikilink")
+      - [1.24.1 Optimizing the Unit Cell and Geometry for an 8 Atom Supercell of Diamond with PSPW](#optimizing-the-unit-cell-and-geometry-for-an-8-atom-supercell-of-diamond-with-pspw  "wikilink")
+      - [1.24.2 Optimizing the Unit Cell for an 8 Atom Supercell of Diamond with BAND](#optimizing-the-unit-cell-for-an-8-atom-supercell-of-diamond-with-band  "wikilink")
+      - [1.24.3 Using BAND to Optimize the Unit Cell for a 2 Atom Primitive Cell of Diamond](#using-band-to-optimize-the-unit-cell-for-a-2-atom-primitive-cell-of-diamond  "wikilink")
+      - [1.24.4 Using BAND to Calculate the Band Structures of Diamond](#using-band-to-calculate-the-band-structures-of-diamond  "wikilink")
+      - [1.24.5 Using BAND to Calculate the Density of States of Diamond](#using-band-to-calculate-the-density-of-states-of-diamond  "wikilink")
+      - [1.24.6 Calculate the Phonon Spectrum of Diamond](#calculate-the-phonon-spectrum-of-diamond  "wikilink")
+   - [1.25 NWPW Tutorial 6: optimizing the unit cell of nickel with fractional occupation](#nwpw-tutorial-6:-optimizing-the-unit-cell-of-nickel-with-fractional-occupation  "wikilink")
+   - [1.26 NWPW Tutorial 7: Optimizing the unit cells with symmetry: Diamond with Fd-3m symmetry and Brucite with P-3m1 symmetry](#nwpw-tutorial-7:-optimizing-the-unit-cells-with-symmetry:-diamond-with-fd-3m-symmetry-and-brucite-with-p-3m1-symmetry  "wikilink")
+   - [1.27 NWPW Tutorial 8: NVT Metropolis Monte-Carlo Simulations](#nwpw-tutorial-8:-nvt-metropolis-monte-carlo-simulations  "wikilink")
+   - [1.28 NWPW Tutorial 9: NPT Metropolis Monte-Carlo Simulations](#nwpw-tutorial-9:-npt-metropolis-monte-carlo-simulations  "wikilink")
+   - [1.29 NWPW Tutorial 9: Free Energy Simulations](#nwpw-tutorial-9:-free-energy-simulations  "wikilink")
+   - [1.30 PAW Tutorial](#paw-tutorial  "wikilink")
+      - [1.30.1 Optimizing a water molecule](#optimizing-a-water molecule  "wikilink")
+      - [1.30.2 Optimizing a unit cell and geometry for Silicon-Carbide](#optimizing-a-unit-cell-and-geometry-for-silicon-carbide  "wikilink")
+      - [1.30.3 Running a Car-Parrinello Simulation](#running-a-car-parrinello-simulation "wikilink")
+   - [1.31 NWPW Capabilities and Limitations](#nwpw-capabilities-and-limitations  "wikilink")
+   - [1.32 Development Blog](#development-blog  "wikilink")
+   - [1.33 Questions and Difficulties](#questions-and-difficulties "wikilink")
+
 
 
 # Pseudopotential plane-wave density functional theory (NWPW)
@@ -43,18 +146,18 @@ PAW basis
 Libraries](#Pseudopotential_and_PAW_basis_Libraries "wikilink")
 describes the pseudopotential library included with NWChem. The
 datafiles used by the PSPW module are described in section [NWPW RTDB
-Entries and DataFiles](#NWPW_RTDB_Entries_and_DataFiles "wikilink").
+Entries and DataFiles](#nwpw-rtdb-entries-and-dataFiles "wikilink").
 Car-Parrinello output data files are described in section
 [Car-Parrinello Output
 Datafiles](#PSPW_Car-Parrinello_Output_Datafiles "wikilink"), and the
 minimization and Car-Parrinello algorithms are described in section
 [Car-Parrinello Scheme for Ab Initio Molecular
-Dynamics](#Car-Parrinello_Scheme_for_Ab_Initio_Molecular_Dynamics "wikilink").
+Dynamics](#car-parrinello-scheme-for-ab-initio-molecular-dynamics "wikilink").
 Examples of how to setup and run a PSPW geometry optimization, a
 Car-Parrinello simulation, a band structure minimization, and a PAW
 geometry optimization are presented at the end. Finally in section [NWPW
 Capabilities and
-Limitations](#NWPW_Capabilities_and_Limitations "wikilink") the
+Limitations](#nwpw-capabilities-and-limitations "wikilink") the
 capabilities and limitations of the NWPW module are discussed.  
 
 <span style="color: red;"> *As of NWChem 6.6 to use PAW potentials the
@@ -69,32 +172,51 @@ skip the next five sections and proceed directly to the tutorials.
 ## PSPW Tasks - Gamma Point Calculations
 
 All input to the PSPW Tasks is contained within the compound PSPW block,
-
-`PSPW `  
-`  ...`  
-`END`
-
+```
+PSPW 
+  ...
+END
+```
 To perform an actual calculation a TASK PSPW directive is used (Section
 [Task](Top-level#Task "wikilink")).
 
 `TASK PSPW`
 
 In addition to the directives listed in
-[Task](Top-level#Task "wikilink"), i.e. TASK pspw energy TASK
-pspw gradient TASK pspw optimize TASK pspw saddle TASK pspw freqencies
-TASK pspw vib there are additional directives that are specific to the
+[Task](Top-level#Task "wikilink"), i.e. 
+```
+TASK PSPW energy 
+TASK PSPW gradient 
+TASK PSPW optimize 
+TASK PSPW saddle 
+TASK PSPW freqencies
+TASK PSPW vib 
+```
+there are additional directives that are specific to the
 PSPW module, which are:
-
-`TASK PSPW [Car-Parrinello             || `  
-`           pspw_dplot                 || `  
-`           wannier                    || `  
-`           psp_generator              || `  
-`           steepest_descent           || `  
-`           psp_formatter              || `  
-`           wavefunction_initializer   || `  
-`           v_wavefunction_initializer || `  
-`           wavefunction_expander       ]`
-
+```
+TASK PSPW [Car-Parrinello             ||   
+           Born-Oppenheimer           ||
+           Metropolis                 ||
+           pspw_et                    ||
+           noit_energy                ||
+           stress                     ||
+           pspw_dplot                 ||  
+           wannier                    ||
+           expand_cell                || 
+           exafs                      ||
+           ionize                     ||
+           lcao                       ||
+           rdf                        ||
+           aimd_properties            ||
+           translate                  ||
+           psp_generator              || 
+           steepest_descent           ||  
+           psp_formatter              || 
+           wavefunction_initializer   ||  
+           v_wavefunction_initializer ||  
+           wavefunction_expander       ]
+```
 Once a user has specified a geometry, the PSPW module can be invoked
 with no input directives (defaults invoked throughout). However, the
 user will probably always specify the simulation cell used in the
@@ -102,72 +224,69 @@ computation, since the default simulation cell is not well suited for
 most systems. There are sub-directives which allow for customized
 application; those currently provided as options for the PSPW module
 are:
+```
+NWPW   
+  SIMULATION_CELL            ... (see section `[`Simulation Cell`](#Simulation_Cell "wikilink")`) END   
+  CELL_NAME <string cell_name default 'cell_default'> `  
+  VECTORS [[input (<string input_wavefunctions default file_prefix.movecs>) || 
+           [output(<string output_wavefunctions default file_prefix.movecs>)]] 
+  XC (Vosko      || LDA          || PBE96         || revPBE       || PBEsol          ||   
+      LDA-SIC    || LDA-SIC/2    || LDA-0.4SIC    || LDA-SIC/4    || LDA-0.2SIC    || 
+      PBE96-SIC  || PBE96-SIC/2  || PBE96-0.4SIC  || PBE96-SIC/4  || PBE96-0.2SIC  || 
+      revPBE-SIC || revPBE-SIC/2 || revPBE-0.4SIC || revPBE-SIC/4 || revPBE-0.2SIC || 
+      PBE96-Grimme2  || PBE96-Grimme3  || PBE96-Grimme4  || BLYP-Grimme2   || BLYP-Grimme3    || BLYP-Grimme4 || 
+      revPBE-Grimme2 || revPBE-Grimme3 || revPBE-Grimme4 || PBEsol-Grimme2 || PBEsol-Grimme3 || PBEsol-Grimme4 || 
+      PBE0-Grimme2    || PBE0-Grimme3    || PBE0-Grimme4   || B3LYP-Grimme2  || B3LYP-Grimme3  || B3LYP-Grimme4 ||
+      revPBE0-Grimme2 || revPBE0-Grimme3 || revPBE0-Grimme4 ||
+      PBE0       || revPBE0      || HSE  || HF || default Vosko) 
+  XC new ...(see section `[`Using Exchange-Correlation Potentials Available in the DFT Module`](#Using_Exchange-Correlation_Potentials_Available_in_the_DFT_Module "wikilink")`) 
+  DFT||ODFT||RESTRICTED||UNRESTRICTED `  
+  MULT <integer mult default 1>   
+  CG 
+  LMBFGS   
+  SCF [Anderson|| simple || Broyden]  
+      [CG || RMM-DIIS] 
+      [density || potential]
+      [ALPHA real alpha default 0.25]
+      [Kerker real ekerk nodefault] 
+      [ITERATIONS integer inner_iterations default 5]  
+      [OUTER_ITERATIONS integer outer_iterations default 0]
+  LOOP <integer inner_iteration outer_iteration default 10 100>  
+  TOLERANCES <real tole tolc default 1.0e-7 1.0e-7> 
+  FAKE_MASS <real fake_mass default 400000.0> 
+  TIME_STEP <real time_step default 5.8> 
+  EWALD_NCUT <integer ncut default 1> 
+  EWALD_RCUT <real rcut default (see input description)>  
+  CUTOFF  <real cutoff> 
+  ENERGY_CUTOFF <real ecut default (see input description)> 
+  WAVEFUNCTION_CUTOFF <real wcut default (see input description)>  
+  ALLOW_TRANSLATION 
+  TRANSLATION (ON || OFF)
+  ROTATION (ON || OFF) 
+  MULLIKEN [OFF]
+  EFIELD `  
 
-`NWPW `  
-` SIMULATION_CELL            ... (see section `[`Simulation``
-``Cell`](#Simulation_Cell "wikilink")`) END `  
-` CELL_NAME <string cell_name default 'cell_default'> `  
-` VECTORS [[input (<string input_wavefunctions default file_prefix.movecs>) ||`  
-`          [output(<string output_wavefunctions default file_prefix.movecs>)]]`  
-` XC (Vosko      || LDA          || PBE96         || revPBE       || PBEsol          ||  `  
-`     LDA-SIC    || LDA-SIC/2    || LDA-0.4SIC    || LDA-SIC/4    || LDA-0.2SIC    || `  
-`     PBE96-SIC  || PBE96-SIC/2  || PBE96-0.4SIC  || PBE96-SIC/4  || PBE96-0.2SIC  || `  
-`     revPBE-SIC || revPBE-SIC/2 || revPBE-0.4SIC || revPBE-SIC/4 || revPBE-0.2SIC || `  
-`     PBE96-Grimme2  || PBE96-Grimme3  || PBE96-Grimme4  || BLYP-Grimme2   || BLYP-Grimme3    || BLYP-Grimme4 ||`  
-`     revPBE-Grimme2 || revPBE-Grimme3 || revPBE-Grimme4 || PBEsol-Grimme2 || PBEsol-Grimme3 || PBEsol-Grimme4 ||`  
-`     PBE0-Grimme2    || PBE0-Grimme3    || PBE0-Grimme4   || B3LYP-Grimme2  || B3LYP-Grimme3  || B3LYP-Grimme4 ||`  
-`     revPBE0-Grimme2 || revPBE0-Grimme3 || revPBE0-Grimme4 ||`  
-`     PBE0       || revPBE0      || HSE  || HF || default Vosko) `  
-` XC new ...(see section `[`Using`` ``Exchange-Correlation``
-``Potentials`` ``Available`` ``in`` ``the`` ``DFT``
-``Module`](#Using_Exchange-Correlation_Potentials_Available_in_the_DFT_Module "wikilink")`)`  
-` DFT||ODFT||RESTRICTED||UNRESTRICTED `  
-` MULT <integer mult default 1> `  
-` CG `  
-` LMBFGS `  
-` SCF [Anderson|| simple || Broyden] `  
-`     [CG || RMM-DIIS] `  
-`     [density || potential] `  
-`     [ALPHA real alpha default 0.25] `  
-`     [Kerker real ekerk nodefault]`  
-`     [ITERATIONS integer inner_iterations default 5] `  
-`     [OUTER_ITERATIONS integer outer_iterations default 0]`  
-` LOOP <integer inner_iteration outer_iteration default 10 100> `  
-` TOLERANCES <real tole tolc default 1.0e-7 1.0e-7> `  
-` FAKE_MASS <real fake_mass default 400000.0> `  
-` TIME_STEP <real time_step default 5.8> `  
-` EWALD_NCUT <integer ncut default 1> `  
-` EWALD_RCUT <real rcut default (see input description)> `  
-` CUTOFF `<real cutoff>` `  
-` ENERGY_CUTOFF <real ecut default (see input description)> `  
-` WAVEFUNCTION_CUTOFF <real wcut default (see input description)> `  
-` ALLOW_TRANSLATION `  
-` TRANSLATION (ON || OFF)`  
-` ROTATION (ON || OFF) `  
-` MULLIKEN [OFF]`  
-` EFIELD `  
-` `  
-` MAPPING <integer mapping default 1>`  
-` NP_DIMENSIONS <integer npi npj default -1 -1>`  
-` CAR-PARRINELLO             ... (see section `[`Car-Parrinello`](#Car-Parrinello "wikilink")`) END `  
-` STEEPEST_DESCENT           ... (see section `[`Steepest``
-``Descent`](#STEEPEST_DESCENT "wikilink")`) END`  
-` DPLOT                      ... (see section `[`DPLOT`](#DPLOT "wikilink")`) END `  
-` WANNIER                    ... (see section `[`Wannier`](#Wannier "wikilink")`) END `  
-` PSP_GENERATOR              ... (see section `[`PSP``
-``Generator`](#PSP_GENERATOR "wikilink")`)) END `  
-`   `  
-` WAVEFUNCTION_INITIALIZER   ... (see section `[`Wavefunction``
-``Initializer`](NWPW_RETIRED#WAVEFUNCTION_INITIALIZER "wikilink")` - retired) END `  
-` V_WAVEFUNCTION_INITIATIZER ... (see section `[`Wavefunction``
-``Velocity``
-``Initializer`](NWPW_RETIRED#V_WAVEFUNCTION_INITIALIZER "wikilink")` - retired) END `  
-` WAVEFUNCTION_EXPANDER      ... (see section `[`Wavefunction``
-``Expander`](NWPW_RETIRED#WAVEFUNCTION_EXPANDER "wikilink")` - retired) END `  
-` INPUT_WAVEFUNCTION_FILENAME <string input_wavefunctions default file_prefix.movecs> `  
-` OUTPUT_WAVEFUNCTION_FILENAME <string output_wavefunctions default file_prefix.movecs> `  
-`END`
+  BO_STEPS <integer bo_inner_iteration bo_outer_iteration default 10 100> 
+  MC_STEPS <integer mc_inner_iteration mc_outer_iteration default 10 100>
+  BO_TIME_STEP  <real bo_time_step default 5.0> 
+  BO_ALGORITHM [verlet|| velocity-verlet || leap-frog]
+  BO_FAKE_MASS <real bo_fake_mass default 500.0> 
 
+  MAPPING <integer mapping default 1>  
+  NP_DIMENSIONS <integer npi npj default -1 -1>`  
+  CAR-PARRINELLO             ... (see section `[`Car-Parrinello`](#Car-Parrinello "wikilink")`) END 
+  STEEPEST_DESCENT           ... (see section `[`Steepest Descent`](#STEEPEST_DESCENT "wikilink")`) END
+  DPLOT                      ... (see section `[`DPLOT`](#DPLOT "wikilink")`) END 
+  WANNIER                    ... (see section `[`Wannier`](#Wannier "wikilink")`) END 
+  PSP_GENERATOR              ... (see section `[`PSP Generator`](#PSP_GENERATOR "wikilink")`)) END   
+  
+  WAVEFUNCTION_INITIALIZER   ... (see section `[`Wavefunction Initializer`](NWPW_RETIRED#WAVEFUNCTION_INITIALIZER "wikilink")` - retired) END  
+  V_WAVEFUNCTION_INITIATIZER ... (see section `[`Wavefunction Velocity Initializer` (NWPW_RETIRED#V_WAVEFUNCTION_INITIALIZER "wikilink")` - retired) END  
+  WAVEFUNCTION_EXPANDER      ... (see section `[`Wavefunction Expander`](NWPW_RETIRED#WAVEFUNCTION_EXPANDER "wikilink")` - retired) END  
+  INPUT_WAVEFUNCTION_FILENAME <string input_wavefunctions default file_prefix.movecs> `  
+ OUTPUT_WAVEFUNCTION_FILENAME <string output_wavefunctions default file_prefix.movecs> `  
+END
+```
 The following list describes the keywords contained in the PSPW input
 block.
 
@@ -235,17 +354,17 @@ block.
     2d-hilbert FFT is used.
 
 A variety of prototype minimizers can be used to minimize the energy. To
-use these new optimizers the following SET directive needs to be
+use these other optimizers the following SET directive needs to be
 specified:
-
-`set nwpw:mimimizer 1 # Default - Grassman conjugate gradient minimizer is used to minimize the energy.`  
-`set nwpw:mimimizer 2 # Grassman LMBFGS minimimzer is used to minimize the energy.`  
-`set nwpw:minimizer 4 # Stiefel conjugate gradient minimizer is used to minimize the energy. `  
-`set nwpw:minimizer 5 # Band-by-band (potential) minimizer is used to minimize the energy.`  
-`set nwpw:minimizer 6 # Projected Grassman LMBFGS minimizer is used to minimize the energy.`  
-`set nwpw:minimizer 7 # Stiefel LMBFGS minimizer is used to minimize the energy.`  
-`set nwpw:minimizer 8 # Band-by-band (density) minimizer is used to minimize the energy.`
-
+```
+set nwpw:mimimizer 1 # Default - Grassman conjugate gradient minimizer is used to minimize the energy. 
+set nwpw:mimimizer 2 # Grassman LMBFGS minimimzer is used to minimize the energy.
+set nwpw:minimizer 4 # Stiefel conjugate gradient minimizer is used to minimize the energy. 
+set nwpw:minimizer 5 # Band-by-band (potential) minimizer is used to minimize the energy.
+set nwpw:minimizer 6 # Projected Grassman LMBFGS minimizer is used to minimize the energy.
+set nwpw:minimizer 7 # Stiefel LMBFGS minimizer is used to minimize the energy.
+set nwpw:minimizer 8 # Band-by-band (density) minimizer is used to minimize the energy.
+```
 Limited testing suggests that the Grassman LMBFGS minimizer is about
 twice as fast as the conjugate gradient minimizer. However, there are
 several known cases where this optimizer fails, so it is currently not a
@@ -253,13 +372,13 @@ default option, and should be used with caution.
 
 In addition the following SET directives can be
 specified:
-
-`set nwpw:lcao_skip .false. # Initial wavefunctions generated using an LCAO guess. `  
-`set nwpw:lcao_skip .true. # Default - Initial wavefunctions generated using a random plane-wave guess.`  
-`set nwpw:lcao_print .false. # Default - Output not produced during the generation of the LCAO guess. `  
-`set nwpw:lcao_print .true. # Output produced during the generation of the LCAO guess.`  
-`set nwpw:lcao_iterations 2 #specifies the number of LCAO iterations.`
-
+```
+set nwpw:lcao_skip .false. # Initial wavefunctions generated using an LCAO guess.  
+set nwpw:lcao_skip .true. # Default - Initial wavefunctions generated using a random plane-wave guess.
+set nwpw:lcao_print .false. # Default - Output not produced during the generation of the LCAO guess.   
+set nwpw:lcao_print .true. # Output produced during the generation of the LCAO guess.
+set nwpw:lcao_iterations 2 #specifies the number of LCAO iterations.
+```
 ### PAW Potentials
 
 The PSPW code can now handle PAW potentials. To use them the
@@ -268,14 +387,14 @@ potentials located in the default paw potential library
 ($NWCHEM\_TOP/src/nwpw/libraryp/paw\_default). For example, to redirect
 the code to use PAW potentials for carbon and hydrogen, the following
 input would be used.
-
-`psinwpw`  
-`    pseudopotentials`  
-`      C library paw_default`  
-`      H library paw_default`  
-`    end`  
-`end`
-
+```
+nwpw 
+    pseudopotentials 
+      C library paw_default 
+      H library paw_default 
+    end  
+end
+```
 Most of the capabilities of PSPW will work with PAW potentials including
 geometry optimization, Car-Parrinello ab initio molecular dynamics,
 Born-Oppenheimer ab initio molecular dynamics, Metropolis Monte-Carlo,
@@ -289,14 +408,14 @@ potentials unit cell optimization can still be carried out using
 numerical stresses. The following SET directives can be used to tell the
 code to calculate stresses
 numerically.
-
-`set includestress  .true.              #this option tells driver to optimize the unit cell`  
-`set includelattice .true.              #this option tells driver to optimize cell using a,b,c,alpha,beta,gamma`  
-`set nwpw:frozen_lattice:thresh 999.0   #large number guarentees the lattice gridding does not adjust during optimization`  
-`set nwpw:cif_filename  pspw_corundum`  
-`set nwpw:stress_numerical .true.`  
-`set nwpw:lstress_numerical .true.`
-
+```
+set includestress  .true.              #this option tells driver to optimize the unit cell 
+set includelattice .true.              #this option tells driver to optimize cell using a,b,c,alpha,beta,gamma 
+set nwpw:frozen_lattice:thresh 999.0   #large number guarentees the lattice gridding does not adjust during optimization
+set nwpw:cif_filename  pspw_corundum
+set nwpw:stress_numerical .true. 
+set nwpw:lstress_numerical .true.
+```
 #### PAW Implementation Notes
 
 The main idea in the PAW method(Blochl 1994) is to project out the
@@ -603,11 +722,11 @@ are
 #### DFT + U Corrections
 
 TO DO
-
-`nwpw`  
-`  uterm d 0.13634 0.0036749 1`  
-`end`
-
+```
+nwpw 
+  uterm d 0.13634 0.0036749 1 
+end
+```
 #### Grimme Dispersion Corrections
 
 Grimme dispersion corrections are currently available for the PBE96,
@@ -619,11 +738,11 @@ PBEsol-Grimme3, PBEsol-Grimme4, PBE0-Grimme2, PBE0-Grimme3,
 PBE0-Grimme4, revPBE0-Grimme2, revPBE0-Grimme3, revPBE0-Grimme4,
 HSE-Grimme2, HSE-Grimme3, HSE-Grimme4, B3LYP-Grimme2, B3LYP-Grimme3, and
 B3LYP-Grimme4 can be used in the XC input directive, e.g.
-
-`nwpw`  
-`   xc pbe96-grimme2`  
-`end`
-
+```
+nwpw
+   xc pbe96-grimme2  
+end
+```
 In these functionals Grimme2, Grimme3 and Grimme4 are defined in the
 following papers by S. Grimme.
 
@@ -661,41 +780,41 @@ The user has the option of using many of the exchange-correlation
 potentials available in DFT Module (see Section [XC and DECOMP --
 Exchange-Correlation
 Potentials](Density_Functional_Theory_for_Molecules#XC_and_DECOMP_--_Exchange-Correlation_Potentials "wikilink")).
-
-` XC [[acm] [b3lyp] [beckehandh] [pbe0] [bhlyp]\`  
-`    [becke97]  [becke97-1] [becke97-2] [becke97-3] [becke98] [hcth] [hcth120] [hcth147] \`  
-`     [hcth407] [becke97gga1] [hcth407p] \`  
-`     [optx] [hcthp14] [mpw91] [mpw1k] [xft97] [cft97] [ft97] [op] [bop] [pbeop]\`  
-`     [HFexch <real prefactor default 1.0>] \`  
-`     [becke88 [nonlocal] <real prefactor default 1.0>] \`  
-`     [xperdew91 [nonlocal] <real prefactor default 1.0>] \`  
-`     [xpbe96 [nonlocal] <real prefactor default 1.0>] \`  
-`     [gill96 [nonlocal] <real prefactor default 1.0>] \`  
-`     [lyp <real prefactor default 1.0>] \`  
-`     [perdew81 <real prefactor default 1.0>] \`  
-`     [perdew86 [nonlocal] <real prefactor default 1.0>] \`  
-`     [perdew91 [nonlocal] <real prefactor default 1.0>] \`  
-`     [cpbe96 [nonlocal] <real prefactor default 1.0>] \`  
-`     [pw91lda <real prefactor default 1.0>] \`  
-`     [slater <real prefactor default 1.0>] \`  
-`     [vwn_1 <real prefactor default 1.0>] \`  
-`     [vwn_2 <real prefactor default 1.0>] \`  
-`     [vwn_3 <real prefactor default 1.0>] \`  
-`     [vwn_4 <real prefactor default 1.0>] \`  
-`     [vwn_5 <real prefactor default 1.0>] \`  
-`     [vwn_1_rpa <real prefactor default 1.0>]]`
-
+```
+  XC [[acm] [b3lyp] [beckehandh] [pbe0] [bhlyp]\
+      [becke97]  [becke97-1] [becke97-2] [becke97-3] [becke98] [hcth] [hcth120] [hcth147] \ 
+      [hcth407] [becke97gga1] [hcth407p] \
+      [optx] [hcthp14] [mpw91] [mpw1k] [xft97] [cft97] [ft97] [op] [bop] [pbeop]\
+      [HFexch <real prefactor default 1.0>] \
+      [becke88 [nonlocal] <real prefactor default 1.0>] \
+      [xperdew91 [nonlocal] <real prefactor default 1.0>] \
+      [xpbe96 [nonlocal] <real prefactor default 1.0>] \
+      [gill96 [nonlocal] <real prefactor default 1.0>] \
+      [lyp <real prefactor default 1.0>] \
+      [perdew81 <real prefactor default 1.0>] \
+      [perdew86 [nonlocal] <real prefactor default 1.0>] \
+      [perdew91 [nonlocal] <real prefactor default 1.0>] \
+      [cpbe96 [nonlocal] <real prefactor default 1.0>] \
+      [pw91lda <real prefactor default 1.0>] \
+      [slater <real prefactor default 1.0>] \
+      [vwn_1 <real prefactor default 1.0>] \
+      [vwn_2 <real prefactor default 1.0>] \
+      [vwn_3 <real prefactor default 1.0>] \
+      [vwn_4 <real prefactor default 1.0>] \
+      [vwn_5 <real prefactor default 1.0>] \
+      [vwn_1_rpa <real prefactor default 1.0>]]
+```
 These functional can be invoked by prepending the "new" directive before
 the exchange correlation potetntials in the input directive, XC new
 slater vwn\_5.
 
 That is, this statement in the input file
-
-`nwpw`  
-` XC new slater vwn_5`  
-`end`  
-`task pspw energy`
-
+```
+nwpw 
+ XC new slater vwn_5  
+end  
+task pspw energy
+```
 Using this input the user has ability to include only the local or
 nonlocal contributions of a given functional. The user can also specify
 a multiplicative prefactor (the variable <prefactor> in the input) for
@@ -722,10 +841,10 @@ as:
 `XC new vwn_1_rpa 0.19 lyp 0.81 HFexch 0.20  slater 0.80 becke88 nonlocal 0.72`
 
 and X3LYP as:
-
-`xc new vwn_1_rpa 0.129 lyp 0.871 hfexch 0.218 slater 0.782 \`  
-`becke88 nonlocal 0.542  xperdew91 nonlocal 0.167`
-
+```
+xc new vwn_1_rpa 0.129 lyp 0.871 hfexch 0.218 slater 0.782 \ 
+becke88 nonlocal 0.542  xperdew91 nonlocal 0.167
+```
 #### Exact Exchange
 
 #### Self-Interaction Corrections
@@ -747,22 +866,22 @@ or equivalently
 `set pspw:SIC_orbitals 1 5 6 7 8 15`
 
 The following directive turns on self-consistent SIC.
-
-`set pspw:SIC_relax .false. # Default - Perturbative SIC calculation`  
-`set pspw:SIC_relax .true. # Self-consistent SIC calculation`
-
+```
+set pspw:SIC_relax .false. # Default - Perturbative SIC calculation  
+set pspw:SIC_relax .true. # Self-consistent SIC calculation
+```
 Two types of solvers can be used and they are specified using the
 following SET directive
-
-`set pspw:SIC_solver_type 1 # Default - cutoff coulomb kernel`  
-`set pspw:SIC_solver_type 2 # Free-space boundary condition kernel`
-
+```
+set pspw:SIC_solver_type 1 # Default - cutoff coulomb kernel 
+set pspw:SIC_solver_type 2 # Free-space boundary condition kernel
+```
 The parameters for the cutoff coulomb kernel are defined by the
 following SET directives:
-
-`set pspw:SIC_screening_radius `<real rcut>  
-`set pspw:SIC_screening_power `<real rpower>
-
+```
+set pspw:SIC_screening_radius <real rcut>  
+set pspw:SIC_screening_power <real rpower>
+```
 ### Wannier
 
 The pspw wannier task is generate maximally localized (Wannier)
@@ -770,31 +889,31 @@ molecular orbitals. The algorithm proposed by Silvestrelli et al is use
 to generate the Wannier orbitals.
 
 Input to the Wannier task is contained within the Wannier sub-block.
-
-`NWPW `  
-`... `  
-` Wannier `  
-`   ... `  
-` END `  
-`...`  
-`END`
-
+```
+NWPW  
+...  
+ Wannier  
+   ...   
+ END 
+... 
+END
+```
 To run a Wannier calculation the following directive is used:
 
 `TASK PSPW Wannier`
 
 Listed below is the format of a Wannier
 sub-block.
-
-`NWPW`  
-`... `  
-` Wannier `  
-`  OLD_WAVEFUNCTION_FILENAME `<string input_wavefunctions default input_movecs>` `  
-`  NEW_WAVEFUNCTION_FILENAME `<string output_wavefunctions default input_movecs>` `  
-` END`  
-`...`  
-`END`
-
+```
+NWPW  
+...   
+ Wannier   
+  OLD_WAVEFUNCTION_FILENAME <string input_wavefunctions default input_movecs>  
+  NEW_WAVEFUNCTION_FILENAME <string output_wavefunctions default input_movecs> 
+ END`  
+...  
+END
+```
 The following list describes the input for the Wannier sub-block.
 
   - <input_wavefunctions> - name of pspw wavefunction file.
@@ -807,24 +926,24 @@ The following list describes the input for the Wannier sub-block.
 
 The "dos" option is used to turn on a density of states analysis. This
 option can be specified without additional parameters, i.e.
-
-`nwpw`  
-`  dos`  
-`end`
-
+```
+nwpw 
+  dos  
+end
+```
 in which case default values are used, or it can be specified with
 additional parameters, e.g.
-
-`nwpw`  
-`   dos 0.002 700 -0.80000 0.8000`  
-`end`
-
+```
+nwpw
+   dos 0.002 700 -0.80000 0.8000 
+end
+```
 The parameters are
-
-`nwpw`  
-` dos  [`<alpha>` `<npoints>` `<emin>` `<emax>`]`  
-`end`
-
+```
+nwpw  
+ dos  [<alpha> <npoints> <emin> <emax>] 
+end
+```
 where
 
   - <alpha> - value for the broadening the eigenvalues, default
@@ -872,12 +991,12 @@ all the atoms are used, e.g.
 
 For projected density of states the "Mulliken" keyword needs to be set,
 e.g.
-
-`nwpw`  
-`  Mulliken`  
-`  dos`  
-`end`
-
+```
+nwpw 
+  Mulliken  
+  dos
+end
+```
 The following additional files are generated and written to the
 permanent\_dir for restricted calculations
 
@@ -962,88 +1081,91 @@ functions.
 
 The following SET directives are used to define the
 fitting.
-
-`set pspw_APC:Gc `<real Gc_cutoff>` # specifies the maximum frequency component of the density to be used in the fitting in units of au.`  
-`set pspw_APC:nga `<integer number_gauss>` # specifies the the number of Gaussian functions per atom.`  
-`set pspw_APC:gamma `<real gamma_list>` # specifies the decay lengths of each atom centered Gaussian. `
-
+```
+set pspw_APC:Gc <real Gc_cutoff> # specifies the maximum frequency component of the density to be used in the fitting in units of au.  
+set pspw_APC:nga `<integer number_gauss>` # specifies the the number of Gaussian functions per atom.
+set pspw_APC:gamma `<real gamma_list>` # specifies the decay lengths of each atom centered Gaussian. 
+```
 We suggest using the following parameters.
-
-`set pspw_APC:Gc 2.5`  
-`set pspw_APC:nga 3`  
-`set pspw_APC:gamma 0.6 0.9 1.35 `  
-
-### PSPW\_DPLOT - Generate Gaussian Cube Files
+```
+set pspw_APC:Gc 2.5
+set pspw_APC:nga 3 
+set pspw_APC:gamma 0.6 0.9 1.35  
+```
+### PSPW_DPLOT - Generate Gaussian Cube Files
 
 The pspw dplot task is used to generate plots of various types of
 electron densities (or orbitals) of a molecule. The electron density is
 calculated on the specified set of grid points from a PSPW calculation.
 The output file generated is in the Gaussian Cube format. Input to the
 DPLOT task is contained within the DPLOT sub-block.
-
-`NWPW `  
-`... `  
-` DPLOT `  
-`   ... `  
-` END `  
-`...`  
-`END`
-
+```
+NWPW 
+...  
+ DPLOT   
+   ...   
+ END  
+... 
+END
+```
 To run a DPLOT calculation the following directive is used:
 
 `TASK PSPW PSPW_DPLOT`
 
 Listed below is the format of a DPLOT
 sub-block.
-
-`NWPW`  
-`... `  
-` DPLOT `  
-`   VECTORS `<string input_wavefunctions default input_movecs>` `  
-`   DENSITY [total||diff||alpha||beta||laplacian||potential default total] `  
-`           `<string density_name no default>` `  
-`   ELF [restricted|alpha|beta] `<string elf_name no default>` `  
-`   ORBITAL `<integer orbital_number no default>` `<string orbital_name no default>  
-`   [LIMITXYZ [units `<string Units default angstroms>`] `  
-`   `<real X_From>` `<real X_To>` `<integer No_Of_Spacings_X>` `  
-`   `<real Y_From>` `<real Y_To>` `<integer No_Of_Spacings_Y>  
-`   `<real Z_From>` `<real Z_To>` `<integer No_Of_Spacings_Z>`]`  
-` END`  
-`...`  
-`END`
-
+```
+NWPW  
+...   
+ DPLOT  
+   VECTORS <string input_wavefunctions default input_movecs>  
+   DENSITY [total||diff||alpha||beta||laplacian||potential default total]   
+           <string density_name no default>  
+   ELF [restricted|alpha|beta] <string elf_name no default>`   
+   ORBITAL <integer orbital_number no default> <string orbital_name no default>  
+   [LIMITXYZ [units <string Units default au>]   
+   <real X_From> <real X_To> <integer No_Of_Spacings_X>   
+   <real Y_From> <real Y_To> <integer No_Of_Spacings_Y>  
+   <real Z_From> <real Z_To> <integer No_Of_Spacings_Z>]  
+   NCELL <integer nx default 0> <integer ny default 0> <integer nz default 0>
+   POSITION_TOLERANCE <real rtol default 0.001>
+ END  
+...  
+END
+```
 The following list describes the input for the DPLOT sub-block.
 
-`VECTORS `<string input_wavefunctions default input_movecs>`  `
+`VECTORS <string input_wavefunctions default input_movecs>` 
 
 This sub-directive specifies the name of the molecular orbital file. If
 the second file is optionally given the density is computed as the
 difference between the corresponding electron densities. The vector
 files have to
 match.
-
-`DENSITY [total||difference||alpha||beta||laplacian||potential default total] `<string density_name no default>
-
+```
+DENSITY [total||difference||alpha||beta||laplacian||potential default total] 
+        <string density_name no default>
+```
 This sub-directive specifies, what kind of density is to be plotted. The
 known names for total, difference, alpha, beta, laplacian, and
 potential.
 
-`ELF [restricted|alpha|beta] `<string elf_name no default>
+`ELF [restricted|alpha|beta] <string elf_name no default>`
 
 This sub-directive specifies that an electron localization function
 (ELF) is to be
 plotted.
 
-`ORBITAL `<integer orbital_number no default>` `<string orbital_name no default>
+`ORBITAL <integer orbital_number no default> <string orbital_name no default>`
 
 This sub-directive specifies the molecular orbital number that is to be
 plotted.
-
-`LIMITXYZ [units `<string Units default angstroms>`] `  
-<real X_From>` `<real X_To>` `<integer No_Of_Spacings_X>` `  
-<real Y_From>` `<real Y_To>` `<integer No_Of_Spacings_Y>  
-<real Z_From>` `<real Z_To>` `<integer No_Of_Spacings_Z>
-
+```
+LIMITXYZ [units <string Units default angstroms>]  
+<real X_From> <real X_To> <integer No_Of_Spacings_X>  
+<real Y_From> <real Y_To> <integer No_Of_Spacings_Y>  
+<real Z_From> <real Z_To> <integer No_Of_Spacings_Z>
+```
 By default the grid spacing and the limits of the cell to be plotted are
 defined by the input wavefunctions. Alternatively the user can use the
 LIMITXYZ sub-directive to specify other limits. The grid is generated
@@ -1053,11 +1175,11 @@ for Units are angstroms, au and bohr.
 ## Band Tasks - Multiple k-point Calculations
 
 All input to the Band Tasks is contained within the compound NWPW block,
-
-`NWPW `  
-` ...`  
-`END`
-
+```
+NWPW   
+ ...  
+END
+```
 To perform an actual calculation a Task Band directive is used (Section
 [Task](Top-level#TASK "wikilink")).
 
@@ -1068,53 +1190,53 @@ with no input directives (defaults invoked throughout). There are
 sub-directives which allow for customized application; those currently
 provided as options for the Band module
 are:
+```
+NWPW   
+ CELL_NAME <string cell_name default cell_default> 
+ ZONE_NAME <string zone_name default zone_default>  
+ INPUT_WAVEFUNCTION_FILENAME <string input_wavefunctions default input_movecs>  
+ OUTPUT_WAVEFUNCTION_FILENAME <string output_wavefunctions default input_movecs>  
+ FAKE_MASS <real fake_mass default 400000.0>   
+ TIME_STEP <real time_step default 5.8>   
+ LOOP <integer inner_iteration outer_iteration default 10 100>   
+ TOLERANCES <real tole tolc default 1.0e-7 1.0e-7> 
+ CUTOFF <real cutoff>  
+ ENERGY_CUTOFF <real ecut default (see input description)> 
+ WAVEFUNCTION_CUTOFF <real wcut default (see input description)>  
+ EWALD_NCUT <integer ncut default 1>] 
+ EWALD_RCUT <real rcut default (see input description)> 
 
-`NWPW `  
-` CELL_NAME <string cell_name default 'cell_default'> `  
-` ZONE_NAME <string zone_name default 'zone_default'> `  
-` INPUT_WAVEFUNCTION_FILENAME `<string input_wavefunctions default input_movecs>` `  
-` OUTPUT_WAVEFUNCTION_FILENAME `<string output_wavefunctions default input_movecs>` `  
-` FAKE_MASS <real fake_mass default 400000.0> `  
-` TIME_STEP <real time_step default 5.8> `  
-` LOOP <integer inner_iteration outer_iteration default 10 100> `  
-` TOLERANCES <real tole tolc default 1.0e-7 1.0e-7> `  
-` CUTOFF `<real cutoff>` `  
-` ENERGY_CUTOFF <real ecut default (see input description)> `  
-` WAVEFUNCTION_CUTOFF <real wcut default (see input description)> `  
-` EWALD_NCUT <integer ncut default 1>] `  
-` EWALD_RCUT <real rcut default (see input description)> `
+ XC (Vosko      || LDA          || PBE96         || revPBE       || PBEsol          ||  `  
+                || HSE  || default Vosko)                                                                `  
+  #Note that HSE is the only hybrid functional implemented in BAND
 
-` XC (Vosko      || LDA          || PBE96         || revPBE       || PBEsol          ||  `  
-`                     || HSE  || default Vosko)                                                                `  
-`  #Note that HSE is the only hybrid functional implemented in BAND`
+ DFT||ODFT||RESTRICTED||UNRESTRICTED   
+ MULT <integer mult default 1>   
+ CG  
+ LMBFGS  
+ SCF [Anderson|| simple || Broyden]  
+ [CG || RMM-DIIS] [density || potential]  
+ [ALPHA real alpha default 0.25]  
+ [ITERATIONS integer inner_iterations default 5]  
+ [OUTER_ITERATIONS integer outer_iterations default 0]
 
-` DFT||ODFT||RESTRICTED||UNRESTRICTED `  
-` MULT <integer mult default 1> `  
-` CG `  
-` LMBFGS `  
-` SCF [Anderson|| simple || Broyden] `  
-` [CG || RMM-DIIS] [density || potential] `  
-` [ALPHA real alpha default 0.25] `  
-` [ITERATIONS integer inner_iterations default 5] `  
-` [OUTER_ITERATIONS integer outer_iterations default 0]`
-
-` SIMULATION_CELL `  
-`   ... (see input description) `  
-` END `  
-` BRILLOUIN_ZONE `  
-`   ... (see input description) `  
-` END `  
-` MONKHORST-PACK <real n1 n2 n3 default 1 1 1>`  
-` BAND_DPLOT `  
-`   ... (see input description) `  
-` END`  
-` MAPPING <integer mapping default 1> `  
-` SMEAR <sigma default 0.001> `  
-` [TEMPERATURE `<temperature>`] `  
-` [FERMI || GAUSSIAN default FERMI] `  
-` [ORBITALS <integer orbitals default 4>]`  
-`END `
-
+ SIMULATION_CELL 
+   ... (see input description)   
+ END 
+ BRILLOUIN_ZONE 
+   ... (see input description) 
+ END 
+ MONKHORST-PACK <real n1 n2 n3 default 1 1 1>
+ BAND_DPLOT 
+   ... (see input description)  
+ END`  
+ MAPPING <integer mapping default 1>  
+ SMEAR <sigma default 0.001> 
+ [TEMPERATURE `<temperature>`] 
+ [FERMI || GAUSSIAN default FERMI] 
+ [ORBITALS <integer orbitals default 4>] 
+END 
+```
 The following list describes these keywords.
 
   - <cell_name> - name of the simulation\_cell named <cell_name>. See
@@ -1172,17 +1294,17 @@ To supply the special points of the Brillouin zone, the user defines a
 brillouin\_zone sub-block within the NWPW block. Listed below is the
 format of a brillouin\_zone
 sub-block.
-
-`NWPW`  
-`... `  
-` BRILLOUIN_ZONE `  
-`   ZONE_NAME <string name default 'zone_default'> `  
-`   (KVECTOR `<real k1 k2 k3 no default>` <real weight default (see input description)> `  
-`    ...) `  
-` END`  
-`...`  
-`END`
-
+```
+NWPW  
+...   
+ BRILLOUIN_ZONE 
+   ZONE_NAME <string name default zone_default> 
+   (KVECTOR <real k1 k2 k3 no default> <real weight default (see input description)>   
+    ...)   
+ END  
+...  
+END
+```
 The user enters the special points and weights of the Brillouin zone.
 The following list describes the input in detail.
 
@@ -1226,24 +1348,24 @@ Body-Centered Tetragonal: gamma, m, n, p, x
 The "dos" option is used to calculate density of states using broadening
 of the eigenvalues . This option can be specified without additional
 parameters, i.e.
-
-`nwpw`  
-`  dos`  
-`end`
-
+```
+nwpw  
+  dos
+end
+```
 in which case default values are used, or it can be specified with
 additional parameters, e.g.
-
-`nwpw`  
-`   dos 0.002 700 -0.80000 0.8000`  
-`end`
-
+```
+nwpw  
+   dos 0.002 700 -0.80000 0.8000
+end
+```
 The parameters are
-
-`nwpw`  
-` dos  [`<alpha>` `<npoints>` `<emin>` `<emax>`]`  
-`end`
-
+```
+nwpw 
+ dos  [<alpha> <npoints> <emin> <emax>]
+end
+```
 where
 
   - <alpha> - value for the broadening the eigenvalues, default
@@ -1287,6 +1409,88 @@ all the atoms are used, e.g.
 
 `set nwpw:dos:actlist 1 2 3 4`
 
+For projected density of states the "Mulliken" keyword needs to be set,
+e.g.
+```
+nwpw
+  Mulliken
+  dos 
+end
+```
+The following additional files are generated and written to the
+permanent\_dir for restricted calculations
+
+  - file\_prefix.mulliken\_dos\_both\_s - total s projected density of
+    restricted states
+  - file\_prefix.mulliken\_fdos\_both\_s - s projected density of states
+    of filled restricted states
+  - file\_prefix.mulliken\_vdos\_both\_s - s projected density of states
+    of virtual restricted states
+  - file\_prefix.mulliken\_dos\_both\_p - total p projected density of
+    states
+  - file\_prefix.mulliken\_fdos\_both\_p - p projected density of states
+    of filled states
+  - file\_prefix.mulliken\_vdos\_both\_p - p projected density of states
+    of virtual states
+
+...
+
+  - file\_prefix.mulliken\_dos\_both\_all - total of projected density
+    of filled and virtual restricted states
+  - file\_prefix.mulliken\_fdos\_both\_all - total of projected density
+    of filled restricted states
+  - file\_prefix.mulliken\_vdos\_both\_all - total of projected density
+    of states of virtual restricted states
+
+Similarly for unrestricted calculations
+
+  - file\_prefix.mulliken\_dos\_alpha\_s - total s projected density of
+    up states
+  - file\_prefix.mulliken\_fdos\_alpha\_s - s projected density of
+    states of filled up states
+  - file\_prefix.mulliken\_vdos\_alpha\_s - s projected density of
+    states of virtual up states
+  - file\_prefix.mulliken\_dos\_alpha\_p - total p projected density of
+    up states
+  - file\_prefix.mulliken\_fdos\_alpha\_p - p projected density of
+    states of filled up states
+  - file\_prefix.mulliken\_vdos\_alpha\_p - p projected density of
+    states of virtual up states
+
+...
+
+  - file\_prefix.mulliken\_dos\_alpha\_all - total of projected density
+    of filled up states
+  - file\_prefix.mulliken\_fdos\_alpha\_all - total of projected density
+    of filled up states
+  - file\_prefix.mulliken\_vdos\_alpha\_all - total of projected density
+    of states of virtual up states
+
+...
+
+  - file\_prefix.mulliken\_dos\_beta\_s - total s projected density of
+    down states
+  - file\_prefix.mulliken\_fdos\_beta\_s - s projected density of states
+    of filled down states
+  - file\_prefix.mulliken\_vdos\_beta\_s - s projected density of states
+    of virtual down states
+  - file\_prefix.mulliken\_dos\_beta\_p - total p projected density of
+    down states
+  - file\_prefix.mulliken\_fdos\_beta\_p - p projected density of states
+    of filled down states
+  - file\_prefix.mulliken\_vdos\_beta\_p - p projected density of states
+    of virtual down states
+
+...
+
+  - file\_prefix.mulliken\_dos\_beta\_all - total of projected density
+    of filled down states
+  - file\_prefix.mulliken\_fdos\_beta\_all - total of projected density
+    of filled down states
+  - file\_prefix.mulliken\_vdos\_beta\_all - total of projected density
+    of states of virtual down states
+
+
 ### Two-Component Wavefunctions (Spin-Orbit ZORA)
 
 ### BAND\_DPLOT - Generate Gaussian Cube Files
@@ -1296,44 +1500,43 @@ electron densities (or orbitals) of a crystal. The electron density is
 calculated on the specified set of grid points from a Band calculation.
 The output file generated is in the Gaussian Cube format. Input to the
 BAND\_DPLOT task is contained within the BAND\_DPLOT sub-block.
-
-`NWPW `  
-`... `  
-` BAND_DPLOT `  
-`   ... `  
-` END `  
-`...`  
-`END`
-
+```
+NWPW   
+...  
+ BAND_DPLOT 
+   ... 
+ END 
+...
+END
+```
 To run a BAND\_DPLOT calculation the following directive is used:
 
 `TASK BAND BAND_DPLOT`
 
 Listed below is the format of a BAND\_DPLOT
 sub-block.
-
-`NWPW`  
-`... `  
-` BAND_DPLOT `  
-`   VECTORS `<string input_wavefunctions default input_movecs>` `  
-`   DENSITY [total||difference||alpha||beta||laplacian||potential default total] `  
-`           `<string density_name no default>` `  
-`   ELF [restricted|alpha|beta] `<string elf_name no default>` `  
-`   ORBITAL (density || real || complex default density) `  
-`           `<integer orbital_number no default>` `  
-`           <integer brillion_number default 1> `  
-`           `<string orbital_name no default>  
-`   [LIMITXYZ [units `<string Units default angstroms>`] `  
-`   `<real X_From>` `<real X_To>` `<integer No_Of_Spacings_X>` `  
-`   `<real Y_From>` `<real Y_To>` `<integer No_Of_Spacings_Y>  
-`   `<real Z_From>` `<real Z_To>` `<integer No_Of_Spacings_Z>`]`  
-` END`  
-`...`  
-`END`
-
+```
+NWPW
+... 
+ BAND_DPLOT 
+   VECTORS `<string input_wavefunctions default input_movecs>
+   DENSITY [total||difference||alpha||beta||laplacian||potential default total] <string density_name no default>
+   ELF [restricted|alpha|beta] <string elf_name no default>  
+   ORBITAL (density || real || complex default density)  
+           <integer orbital_number no default> 
+           <integer brillion_number default 1> 
+           <string orbital_name no default>  
+   [LIMITXYZ [units <string Units default angstroms>]   
+    <real X_From> <real X_To> <integer No_Of_Spacings_X>  
+    <real Y_From> <real Y_To> <integer No_Of_Spacings_Y>  
+    <real Z_From> <real Z_To> <integer No_Of_Spacings_Z>] 
+ END
+...
+END
+```
 The following list describes the input for the BAND\_DPLOT sub-block.
 
-`VECTORS `<string input_wavefunctions default input_movecs>
+`VECTORS <string input_wavefunctions default input_movecs>`
 
 This sub-directive specifies the name of the molecular orbital file. If
 the second file is optionally given the density is computed as the
@@ -1341,28 +1544,28 @@ difference between the corresponding electron densities. The vector
 files have to
 match.
 
-`DENSITY [total||difference||alpha||beta||laplacian||potential default total] `<string density_name no default>
+`DENSITY [total||difference||alpha||beta||laplacian||potential default total] `<string density_name no default>`
 
 This sub-directive specifies, what kind of density is to be plotted. The
 known names for total, difference, alpha, beta, laplacian, and
 potential.
 
-`ELF [restricted|alpha|beta] `<string elf_name no default>
+`ELF [restricted|alpha|beta] `<string elf_name no default>`
 
 This sub-directive specifies that an electron localization function
 (ELF) is to be
 plotted.
-
-`ORBITAL (density || real || complex default density) `<integer orbital_number no default>`  <integer brillion_number default 1> `<string orbital_name no default>
-
+```
+ORBITAL (density || real || complex default density) <integer orbital_number no default><integer brillion_number default 1> <string orbital_name no default>
+```
 This sub-directive specifies the molecular orbital number that is to be
 plotted.
-
-`LIMITXYZ [units `<string Units default angstroms>`] `  
-<real X_From>` `<real X_To>` `<integer No_Of_Spacings_X>` `  
+```
+LIMITXYZ [units `<string Units default angstroms>] 
+<real X_From>` `<real X_To>` `<integer No_Of_Spacings_X>  
 <real Y_From>` `<real Y_To>` `<integer No_Of_Spacings_Y>  
 <real Z_From>` `<real Z_To>` `<integer No_Of_Spacings_Z>
-
+```
 By default the grid spacing and the limits of the cell to be plotted are
 defined by the input wavefunctions. Alternatively the user can use the
 LIMITXYZ sub-directive to specify other limits. The grid is generated
@@ -1382,64 +1585,64 @@ Dynamics](#Car-Parrinello_Scheme_for_Ab_Initio_Molecular_Dynamics "wikilink").
 
 Input to the Car-Parrinello simulation is contained within the
 Car-Parrinello sub-block.
-
-`NWPW `  
-`... `  
-` Car-Parrinello `  
-`   ... `  
-` END `  
-`...`  
-`END`
-
+```
+NWPW 
+... 
+ Car-Parrinello  
+   ...  
+ END  
+...
+END
+```
 To run a Car-Parrinello calculation the following directives are used:
-
-`TASK PSPW Car-Parrinello `  
-`TASK BAND Car-Parrinello`  
-`TASK PAW Car-Parrinello`
-
+```
+TASK PSPW Car-Parrinello   
+ TASK BAND Car-Parrinello`  
+ TASK PAW Car-Parrinello
+```
 The Car-Parrinello sub-block contains a great deal of input, including
 pointers to data, as well as parameter input. Listed below is the format
 of a Car-Parrinello
 sub-block.
-
-`NWPW`  
-`... `  
-` Car-Parrinello `  
-`   CELL_NAME <string cell_name default 'cell_default'> `  
-`   INPUT_WAVEFUNCTION_FILENAME <string input_wavefunctions default file_prefix.movecs> `  
-`   OUTPUT_WAVEFUNCTION_FILENAME <string output_wavefunctions default file_prefix.movecs> `  
-`   INPUT_V_WAVEFUNCTION_FILENAME <string input_v_wavefunctions default file_prefix.vmovecs> `  
-`   OUTPUT_V_WAVEFUNCTION_FILENAME <string output_v_wavefunctions default file_prefix.vmovecs> `  
-`   FAKE_MASS <real fake_mass default default 1000.0> `  
-`   TIME_STEP <real time_step default 5.0> `  
-`   LOOP <integer inner_iteration outer_iteration default 10 1> `  
-`   SCALING <real scale_c scale_r default 1.0 1.0> `  
-`   ENERGY_CUTOFF <real ecut default (see input description)> `  
-`   WAVEFUNCTION_CUTOFF <real wcut default (see input description)> `  
-`   EWALD_NCUT <integer ncut default 1> `  
-`   EWALD_RCUT <real rcut default (see input description)> `  
-`   XC (Vosko      || LDA          || PBE96         || revPBE       || HF            ||  `  
-`       LDA-SIC    || LDA-SIC/2    || LDA-0.4SIC    || LDA-SIC/4    || LDA-0.2SIC    || `  
-`       PBE96-SIC  || PBE96-SIC/2  || PBE96-0.4SIC  || PBE96-SIC/4  || PBE96-0.2SIC  || `  
-`       revPBE-SIC || revPBE-SIC/2 || revPBE-0.4SIC || revPBE-SIC/4 || revPBE-0.2SIC || `  
-`       PBE0       || revPBE0      || default Vosko) `  
-`   [Nose-Hoover <real Period_electron real Temperature_electron `  
-`                 real Period_ion      real Temperature_ion    `  
-`                 integer Chainlength_electron integer Chainlength_ion default 100.0 298.15 100.0 298.15 1 1>]  `  
-`   [TEMPERATURE <real Temperature_ion      real Period_ion `  
-`                 real Temperature_electron real Period_electron  `  
-`                 integer Chainlength_ion integer Chainlength_electron default 298.15 1200 298.15 1200.0 1 1>]  `  
-`   [SA_decay <real sa_scale_c sa_scale_r default 1.0 1.0>] `  
-`   XYZ_FILENAME <string xyz_filename default file_prefix.xyz> `  
-`   ION_MOTION_FILENAME <string ion_motion_filename default file_prefix.ion_motion`  
-`   EMOTION_FILENAME <string emotion_filename default file_prefix.emotion> `  
-`   HMOTION_FILENAME `<string hmotion_filename nodefault>` `  
-`   OMOTION_FILENAME `<string omotion_filename nodefault>` `  
-`   EIGMOTION_FILENAME `<string eigmotion_filename nodefault>  
-` END`  
-`...`  
-`END`
-
+```
+NWPW  
+...   
+ Car-Parrinello   
+   CELL_NAME <string cell_name default 'cell_default'>
+   INPUT_WAVEFUNCTION_FILENAME <string input_wavefunctions default file_prefix.movecs>  
+   OUTPUT_WAVEFUNCTION_FILENAME <string output_wavefunctions default file_prefix.movecs>   
+   INPUT_V_WAVEFUNCTION_FILENAME <string input_v_wavefunctions default file_prefix.vmovecs> 
+   OUTPUT_V_WAVEFUNCTION_FILENAME <string output_v_wavefunctions default file_prefix.vmovecs>  
+   FAKE_MASS <real fake_mass default default 1000.0>
+   TIME_STEP <real time_step default 5.0>  
+   LOOP <integer inner_iteration outer_iteration default 10 1> 
+   SCALING <real scale_c scale_r default 1.0 1.0> `  
+   ENERGY_CUTOFF <real ecut default (see input description)>   
+   WAVEFUNCTION_CUTOFF <real wcut default (see input description)>   
+   EWALD_NCUT <integer ncut default 1>   
+   EWALD_RCUT <real rcut default (see input description)> `  
+    XC (Vosko      || LDA          || PBE96         || revPBE       || HF            ||    
+        LDA-SIC    || LDA-SIC/2    || LDA-0.4SIC    || LDA-SIC/4    || LDA-0.2SIC    ||   
+        PBE96-SIC  || PBE96-SIC/2  || PBE96-0.4SIC  || PBE96-SIC/4  || PBE96-0.2SIC  ||   
+        revPBE-SIC || revPBE-SIC/2 || revPBE-0.4SIC || revPBE-SIC/4 || revPBE-0.2SIC ||   
+        PBE0       || revPBE0      || default Vosko) 
+   [Nose-Hoover <real Period_electron real Temperature_electron 
+                 real Period_ion      real Temperature_ion     
+                 integer Chainlength_electron integer Chainlength_ion default 100.0 298.15 100.0 298.15 1 1>]   
+   [TEMPERATURE <real Temperature_ion      real Period_ion 
+                 real Temperature_electron real Period_electron  
+                 integer Chainlength_ion integer Chainlength_electron default 298.15 1200 298.15 1200.0 1 1>]   
+   [SA_decay <real sa_scale_c sa_scale_r default 1.0 1.0>] 
+   XYZ_FILENAME <string xyz_filename default file_prefix.xyz> 
+   ION_MOTION_FILENAME <string ion_motion_filename default file_prefix.ion_motion
+   EMOTION_FILENAME <string emotion_filename default file_prefix.emotion> 
+   HMOTION_FILENAME `<string hmotion_filename nodefault>
+   OMOTION_FILENAME `<string omotion_filename nodefault>
+   EIGMOTION_FILENAME `<string eigmotion_filename nodefault>  
+ END  
+...  
+END
+```
 The following list describes the input for the Car-Parrinello sub-block.
 
   - <cell_name> - name of the the simulation\_cell named <cell_name>.
@@ -1595,7 +1798,7 @@ mass shifting. This can be done by the following +SET+ directive.
 Data file that stores ion positions and velocities as a function of time
 in XYZ
 format.
-
+```
 `[line 1: ] n_ion`  
 `[line 2: ] do ii=1,n_ion`  
 `[line 2+ii: ] atom_name(ii), x(ii),y(ii),z(ii),vx(ii),vy(ii),vz(ii)`  
@@ -1605,12 +1808,12 @@ format.
 `[line n_ion+3+ii: ] atom_name(ii), x(ii),y(ii),z(ii), vx(ii),vy(ii),vz(ii)`  
 `end do`  
 `[line 2*n_ion+4: ] ....`
-
+```
 #### ION\_MOTION motion file
 
 Datafile that stores ion positions and velocities as a function of
 time
-
+```
 `[line 1: ] it_out, n_ion, omega, a1.x,a1.y,a1.z, a2.x,a2,y,a2.z, a3.x,a3.y,a3.z`  
 `[line 2: ] time`  
 `do ii=1,n_ion`  
@@ -1621,17 +1824,17 @@ time
 `[line n_ion+3+ii: ] ii, atom_symbol(ii),atom_name(ii), x(ii),y(ii),z(ii), vx(ii),vy(ii),vz(ii)`  
 `end do`  
 `[line 2*n_ion+4: ] ....`
-
+```
 #### EMOTION motion file
 
 Datafile that store energies as a function of
 time.
-
+```
 `[line 1: ] time, E1,E2,E3,E4,E5,E6,E7,E8,(E9,E10, if Nose-Hoover),eave,evar,have,hvar,ion_Temp`  
 `[line 2: ] ...`
-
+```
 where
-
+```
 `E1 = total energy`  
 `E2 = potential energy`  
 `E3 = ficticious kinetic energy`  
@@ -1645,11 +1848,11 @@ where
 `have = average total energy`  
 `hvar = variance of total energy`  
 `ion_Temp = temperature`
-
+```
 #### HMOTION motion file
 
 Datafile that stores the rotation matrix as a function of time.
-
+```
 `[line 1: ] time`  
 `[line 2: ] ms,ne(ms),ne(ms)`  
 `do i=1,ne(ms)`  
@@ -1657,15 +1860,15 @@ Datafile that stores the rotation matrix as a function of time.
 `end do`  
 `[line 3+ne(ms): ] time`  
 `[line 4+ne(ms): ] ....`
-
+```
 #### EIGMOTION motion file
 
 Datafile that stores the eigenvalues for the one-electron orbitals as a
 function of time.
-
+```
 `[line 1: ] time, (eig(i), i=1,number_orbitals)`  
 `[line 2: ] ...`
-
+```
 #### OMOTION motion file
 
 Datafile that stores a reduced representation of the one-electron
@@ -1673,8 +1876,23 @@ orbitals. To be used with a molecular orbital viewer that will be ported
 to NWChem in the near future.
 
 ## Born-Oppenheimer Molecular Dynamics
+```
+NWPW
+...
+  BO_STEPS <integer bo_inner_iteration bo_outer_iteration default 10 100> 
+  BO_TIME_STEP  <real bo_time_step default 5.0> 
+  BO_ALGORITHM [verlet|| velocity-verlet || leap-frog]
+  BO_FAKE_MASS <real bo_fake_mass default 500.0> 
+END
+```
 
 ## Metropolis Monte-Carlo
+```
+NWPW
+...
+  MC_STEPS <integer mc_inner_iteration mc_outer_iteration default 10 100> 
+END
+```
 
 ## Free Energy Simulations
 
@@ -1751,7 +1969,7 @@ of F(s) is given by
 Input to a metadynamics simulation is contained within the METADYNAMICS
 sub-block. Listed below is the the format of a METADYNAMICS
 sub-block,
-
+```
 `NWPW`  
 ` METADYNAMICS`  
 `    [`  
@@ -1793,16 +2011,16 @@ sub-block,
 `    [TEMPERED `<real tempered_temperature no default>`]`  
 `  END`  
 `END`
-
+```
 Multiple collective variables can be defined at the same time, e.g.
-
+```
 `NWPW`  
 ` METADYNAMICS`  
 `    BOND 1 8  W 0.0005 SIGMA 0.1`  
 `    BOND 1 15 W 0.0005 SIGMA 0.1`  
 `  END`  
 `END`
-
+```
 will produce a two-dimensional potential energy surface.
 
 ### TAMD - Temperature Accelerated Molecular Dynamics
@@ -1915,7 +2133,7 @@ optimization of the one-electron orbitals.
 
 Input to the steepest\_descent simulation is contained within the
 steepest\_descent sub-block.
-
+```
 `NWPW `  
 `... `  
 ` STEEPEST_DESCENT `  
@@ -1923,17 +2141,17 @@ steepest\_descent sub-block.
 ` END `  
 `...`  
 `END`
-
+```
 To run a steepest\_descent calculation the following directive is used:
-
+```
 `TASK PSPW steepest_descent`  
 `TASK BAND steepest_descent `
-
+```
 The steepest\_descent sub-block contains a great deal of input,
 including pointers to data, as well as parameter input. Listed below is
 the format of a STEEPEST\_DESCENT
 sub-block.
-
+```
 `NWPW`  
 `... `  
 ` STEEPEST_DESCENT `  
@@ -1958,7 +2176,7 @@ sub-block.
 ` END`  
 `...`  
 `END`
-
+```
 The following list describes the input for the STEEPEST\_DESCENT
 sub-block.
 
@@ -2005,19 +2223,19 @@ sub-block.
 The simulation cell parameters are entered by defining a
 simulation\_cell sub-block within the PSPW block. Listed below is the
 format of a simulation\_cell sub-block.
-
-`NWPW`  
-`... `  
-` SIMULATION_CELL CELL_NAME <string name default 'cell_default'> `  
-` BOUNDARY_CONDITIONS (periodic || aperiodic default periodic) `  
-` LATTICE_VECTORS `  
-`   <real a1.x a1.y a1.z default 20.0 0.0 0.0> `  
-`   <real a2.x a2.y a2.z default 0.0 20.0 0.0> `  
-`   <real a3.x a3.y a3.z default 0.0 0.0 20.0> `  
-` NGRID <integer na1 na2 na3 default 32 32 32> END`  
-`...`  
-`END`
-
+```
+NWPW 
+...   
+ SIMULATION_CELL CELL_NAME <string name default 'cell_default'>  
+ BOUNDARY_CONDITIONS (periodic || aperiodic default periodic) 
+ LATTICE_VECTORS   
+   <real a1.x a1.y a1.z default 20.0 0.0 0.0> 
+   <real a2.x a2.y a2.z default 0.0 20.0 0.0>   
+   <real a3.x a3.y a3.z default 0.0 0.0 20.0> 
+ NGRID <integer na1 na2 na3 default 32 32 32> END 
+...  
+`END
+```
 Basically, the user needs to enter the dimensions, gridding and boundary
 conditions of the simulation cell. The following list describes the
 input in detail.
@@ -2042,63 +2260,63 @@ enter the unit cell using the standard cell parameters, a, b, c,
 <img alt="$\beta$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/8217ed3c32a785f0b5aad4055f432ad8.svg?invert_in_darkmode&sanitize=true" align=middle width="10.1277pt" height="22.74591pt"/>, 
 and <img alt="$\gamma$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/11c596de17c342edeed29f489aa4b274.svg?invert_in_darkmode&sanitize=true" align=middle width="9.388665pt" height="14.10255pt"/>, by using the LATTICE block. The
 format for input is as follows:
-
-`NWPW`  
-`... `  
-` SIMULATION_CELL `  
-`   ... `  
-`   LATTICE `  
-`     [lat_a <real a default 20.0>] `  
-`     [lat_b <real b default 20.0>] `  
-`     [lat_c <real c default 20.0>] `  
-`     [alpha <real alpha default 90.0>] `  
-`     [beta <real beta default 90.0>] `  
-`     [gamma <real gamma default 90.0>] `  
-`   END `  
-`   ... `  
-` END`  
-`...`  
-`END`
-
+```
+NWPW 
+... 
+ SIMULATION_CELL `  
+   ...   
+   LATTICE   
+     [lat_a <real a default 20.0>]  
+     [lat_b <real b default 20.0>]  
+     [lat_c <real c default 20.0>] 
+     [alpha <real alpha default 90.0>]  
+     [beta <real beta default 90.0>] 
+     [gamma <real gamma default 90.0>]  
+   END 
+   ...   
+ END
+...
+END
+```
 The user can also enter the lattice vectors of standard unit cells using
 the keywords SC, FCC, BCC, for simple cubic, face-centered cubic, and
 body-centered cubic respectively. Listed below is an example of the
 format of this type of input.
-
-`NWPW`  
-`... `  
-` SIMULATION_CELL SC 20.0 `  
-`   .... `  
-` END`  
-`...`  
-`END`
-
+```
+NWPW 
+... 
+ SIMULATION_CELL SC 20.0 
+   .... 
+ END
+...
+END
+```
 Finally, the lattice vectors from the unit cell can also be defined
 using the fractional coordinate input in the GEOMETRY input (see section
 [Geometry Lattice
 Parameters](Geometry#SYSTEM_--_Lattice_parameters_for_periodic_systems "wikilink")).
 Listed below is an example of the format of this type of input for an 8
 atom silicon carbide unit cell.
-
-`geometry units au `  
-` system crystal `  
-`   lat_a 8.277d0 `  
-`   lat_b 8.277d0 `  
-`   lat_c 8.277d0 `  
-`   alpha 90.0d0 `  
-`   beta 90.0d0 `  
-`   gamma 90.0d0 `  
-` end`  
-` Si -0.50000d0 -0.50000d0 -0.50000d0`  
-` Si 0.00000d0 0.00000d0 -0.50000d0`  
-` Si 0.00000d0 -0.50000d0 0.00000d0`  
-` Si -0.50000d0 0.00000d0 0.00000d0`  
-` C -0.25000d0 -0.25000d0 -0.25000d0`  
-` C 0.25000d0 0.25000d0 -0.25000d0`  
-` C 0.25000d0 -0.25000d0 0.25000d0`  
-` C -0.25000d0 0.25000d0 0.25000d0`  
-`end`
-
+```
+geometry units au  
+ system crystal 
+   lat_a 8.277
+   lat_b 8.277   
+   lat_c 8.277   
+   alpha 90.0  
+   beta 90.0   
+   gamma 90.0   
+ end
+ Si -0.50000 -0.50000 -0.50000
+ Si  0.00000  0.00000 -0.50000 
+ Si  0.00000 -0.50000  0.00000
+ Si -0.50000  0.00000  0.00000  
+ C  -0.25000 -0.25000 -0.25000  
+ C   0.25000  0.25000 -0.25000 
+ C   0.25000 -0.25000  0.25000 
+ C  -0.25000  0.25000  0.25000  
+end
+```
 Warning - Currently only the "system crystal" option is recognized by
 NWPW. The "system slab" and "system polymer" options will be supported
 in the future.
@@ -2118,10 +2336,10 @@ crystal unit cell in addition to the geometry.
 The smear keyword to turn on fractional occupation of the molecular
 orbitals in PSPW and BAND
 calculations
-
-`SMEAR <sigma default 0.001> [TEMPERATURE `<temperature>`] [FERMI || GAUSSIAN default FERMI] `  
-`                            [ORBITALS <integer orbitals default 4>]`
-
+```
+SMEAR <sigma default 0.001> [TEMPERATURE `<temperature>`] [FERMI || GAUSSIAN default FERMI]   
+                            [ORBITALS <integer orbitals default 4>]
+```
 Both Fermi-Dirac (FERMI) and Gaussian broadening functions are
 available. The ORBITALS keyword is used to change the number of virtual
 orbitals to be used in the calculation. Note to use this option the user
@@ -2148,66 +2366,65 @@ to
 <img alt="$E_{psp}= \sum_{\sigma=\uparrow,\downarrow} \sum_{i=1}^{n_{elc}^\sigma} \sum_{I=1}^{n_{ions}} \left( &amp;lt;\psi_i^\sigma|V_{local}^{I}|\psi_i^\sigma&amp;gt;  + \sum_{l=0}^{l_{max}^I} \sum_{m=-l}^{l} \sum_{n=1}^{n_{max}^I} \sum_{n'=1}^{n_{max}^I}  \left(1-\delta_{l,l^\sigma} \delta_{I,ionlist^\sigma}(\xi^\sigma-1)\right) &amp;lt;\psi_i^\sigma|P_{nlm}^I&amp;gt; h_{l,n,n'}^I &amp;lt;P_{n'lm}^{I}|\psi_i^\sigma&amp;gt; \right)$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/c0af951100d1f7a3b61c91a36abaebd7.svg?invert_in_darkmode&sanitize=true" align=middle width="1026.227895pt" height="39.01194pt"/>
 
 An example input is as follows:
+```
+title "hematite 10 atoms"
+  
+start hema10
+  
+memory 1900 mb
+  
+permanent_dir ./perm
+scratch_dir   ./perm
+  
+geometry center noautosym noautoz print
+ system crystal
+   lat_a 5.42 
+   lat_b 5.42 
+   lat_c 5.42 
+   alpha 55.36  
+   beta  55.36  
+   gamma 55.36  
+ end
+Fe                  0.355000   0.355000   0.355000
+Fe                  0.145000   0.145000   0.145000  
+Fe                 -0.355000  -0.355000  -0.355000  
+Fe                  0.855000   0.855000   0.855000  
+O                   0.550000  -0.050000   0.250000  
+O                   0.250000   0.550000  -0.050000  
+O                  -0.050000   0.250000   0.550000  
+O                  -0.550000   0.050000  -0.250000  
+O                  -0.250000  -0.550000   0.050000  
+O                   0.050000  -0.250000  -0.550000\  
+end  
+  
+nwpw
+  virtual 8
+  odft
+  ewald_rcut 3.0
+  ewald_ncut 8 
+  xc pbe96
+  lmbfgs 
+  mult 1
+  dplot
+     density diff diff1.cube
+  end`  
 
-`title "hematite 10 atoms"`  
+  #spin penalty functions  
+  pspspin up   d -1.0 1:2  
+  pspspin down d -1.0 3:4  
+end
+task pspw energy 
+task pspw pspw_dplot  
   
-`start hema10`  
-  
-`memory 1900 mb`  
-  
-`permanent_dir ./perm`  
-`scratch_dir   ./perm`  
-  
-`geometry center noautosym noautoz print`  
-` system crystal`  
-`   lat_a 5.42`  
-`   lat_b 5.42`  
-`   lat_c 5.42`  
-`   alpha 55.36`  
-`   beta  55.36`  
-`   gamma 55.36`  
-` end`  
-`Fe                  0.355000   0.355000   0.355000`  
-`Fe                  0.145000   0.145000   0.145000`  
-`Fe                 -0.355000  -0.355000  -0.355000`  
-`Fe                  0.855000   0.855000   0.855000`  
-`O                   0.550000  -0.050000   0.250000`  
-`O                   0.250000   0.550000  -0.050000`  
-`O                  -0.050000   0.250000   0.550000`  
-`O                  -0.550000   0.050000  -0.250000`  
-`O                  -0.250000  -0.550000   0.050000`  
-`O                   0.050000  -0.250000  -0.550000`  
-`end`  
-  
-`nwpw`  
-`  virtual 8`  
-`  odft`  
-`  ewald_rcut 3.0`  
-`  ewald_ncut 8`  
-`  xc pbe96`  
-`  lmbfgs`  
-`  cutoff 10.0`  
-`  mult 1`  
-`  dplot`  
-`     density diff diff1.cube`  
-`  end`  
-`   `  
-`  #spin penalty functions`  
-`  pspspin up   d -1.0 1:2`  
-`  pspspin down d -1.0 3:4`  
-`end`  
-`task pspw energy`  
-`task pspw pspw_dplot`  
-  
-`nwpw`  
-`  pspspin off`  
-`  dplot`  
-`     density diff diff2.cube`  
-`  end`  
-`end`  
-`task pspw energy`  
-`task pspw pspw_dplot`
-
+nwpw
+  pspspin off
+  dplot
+     density diff diff2.cube
+  end`  
+end`  
+task pspw energy
+task pspw pspw_dplot
+```
 ## AIMD/MM (QM/MM)
 
 A QM/MM capability is available that is integrated with PSPW module and
@@ -2216,7 +2433,7 @@ very robust but it is straightforward. The first step to run a QM/MM
 simulations is to define the MM atoms in the geometry block. The MM
 atoms must be at the end of the geometry and a carat, " ^ ", must be
 appended to the end of the atom name, e.g.
-
+```
 `geometry units angstrom nocenter noautosym noautoz print xyz`  
 ` C -0.000283 0.000106 0.000047`  
 ` Cl -0.868403 1.549888 0.254229`  
@@ -2230,10 +2447,10 @@ appended to the end of the atom name, e.g.
 ` H^ 0.4978E+01 -0.3040E+01 -0.2113E+01`  
 ` H^ 0.5654E+01 -0.2540E+01 -0.7127E+00`  
 `end`
-
+```
 Another way to specify the MM atoms is to use the mm\_tags option which
 appends the atoms with a " ^ ".
-
+```
 `geometry units angstrom nocenter noautosym noautoz print xyz`  
 ` C -0.000283 0.000106 0.000047`  
 ` Cl -0.868403 1.549888 0.254229`  
@@ -2252,16 +2469,16 @@ appends the atoms with a " ^ ".
 `    mm_tags 6:11`  
 `  END`  
 `END`
-
+```
 The option "mm\_tags off" can be used to remove the " ^ " from the
 atoms, i.e.
-
+```
 `NWPW`  
 `  QMMM`  
 `     mm_tags 6:11 off`  
 `  END`  
 `END `
-
+```
 Next the pseudopotentials have be defined for the every type of MM atom
 contained in the geometry blocks. The following local pseudopotential
 suggested by Laio, VandeVondele and Rothlisberger can be automatically
@@ -2271,29 +2488,29 @@ generated.
 
 The following input To define this pseudopo the O^ MM atom using the
 following input
-
+```
 `NWPW `  
 ` QMMM `  
 `   mm_psp O^ -0.8476 4 0.70 `  
 ` END`  
 `END`
-
+```
 defines the local pseudopotential for the O^ MM atom , where
 <img alt="$Z_{ion}=-0.8476$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/8c301378f33eb82930d006117829a286.svg?invert_in_darkmode&sanitize=true" align=middle width="111.366255pt" height="22.38192pt"/>, 
 <img alt="$n_{\sigma}=4$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/e56942592d9ad471b92a22dba2b133c6.svg?invert_in_darkmode&sanitize=true" align=middle width="48.74067pt" height="21.10812pt"/>, and <img alt="$r_c=0.7$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/9c3a2feed51f0f36f7a17124ccead504.svg?invert_in_darkmode&sanitize=true" align=middle width="56.881275pt" height="21.10812pt"/>. The following
 input can be used to define the local pseudopotentials for all the MM
 atoms in the geometry block defined above
-
+```
 `NWPW `  
 ` QMMM `  
 `   mm_psp O^ -0.8476 4 0.70 `  
 `   mm_psp H^ 0.4238 4 0.40 `  
 ` END`  
 `END`
-
+```
 Next the Lenard-Jones potentials for the QM and MM atoms need to be
 defined. This is done as as follows
-
+```
 `NWPW `  
 ` QMMM `  
 `   lj_ion_parameters C 3.41000000d0 0.10d0 `  
@@ -2301,7 +2518,7 @@ defined. This is done as as follows
 `   lj_ion_parameters O^ 3.16555789d0 0.15539425d0 `  
 ` END`  
 `END`
-
+```
 Note that the Lenard-Jones potential is not defined for the MM H atoms
 in this example. The final step is to define the MM fragments in the
 simulation. MM fragments are a set of atoms in which bonds and angle
@@ -2309,7 +2526,7 @@ harmonic potentials are defined, or alternatively shake constraints are
 defined. The following input defines the fragments for the two water
 molecules in the above
 geometry,
-
+```
 `NWPW `  
 ` QMMM `  
 `   fragment spc `  
@@ -2322,10 +2539,10 @@ geometry,
 `   end `  
 ` END`  
 `END`
-
+```
 The fragments can be defined using shake constraints
 as
-
+```
 `NWPW `  
 ` QMMM `  
 `   fragment spc `  
@@ -2336,10 +2553,10 @@ as
 `   end `  
 ` END`  
 `END`
-
+```
 Alternatively, each water could be defined independently as
 follows.
-
+```
 `NWPW `  
 ` QMMM `  
 `   fragment spc1 `  
@@ -2358,7 +2575,7 @@ follows.
 `   end `  
 ` END`  
 `END`
-
+```
 ## PSP\_GENERATOR
 
 A one-dimensional pseudopotential code has been integrated into NWChem.
@@ -2372,7 +2589,7 @@ pseudopotentials using this module.
 
 Input to the PSP\_GENERATOR task is contained within the PSP\_GENERATOR
 sub-block.
-
+```
 `NWPW `  
 `... `  
 ` PSP_GENERATOR `  
@@ -2380,14 +2597,14 @@ sub-block.
 ` END `  
 `...`  
 `END`
-
+```
 To run a PSP\_GENERATOR calculation the following directive is used:
 
 `TASK PSPW PSP_GENERATOR`
 
 Listed below is the format of a PSP\_GENERATOR
 sub-block.
-
+```
 `NWPW`  
 `... `  
 ` PSP_GENERATOR `  
@@ -2408,7 +2625,7 @@ sub-block.
 ` END`  
 `... `  
 `END`
-
+```
 The following list describes the input for the PSP\_GENERATOR sub-block.
 
   - <psp_name> - name that points to a.
@@ -2435,20 +2652,20 @@ state.
 
 For example to define a pseudopotential for the Neon atom in the
 <img alt="$1s^2 2s^2 2p^6$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/a25c18197ba3b73e419b77b39111c7d8.svg?invert_in_darkmode&sanitize=true" align=middle width="69.43563pt" height="26.70657pt"/> state could have the block
-
+```
 `ATOMIC_FILLING: 1 2 `  
 ` 1 s 2.0 #core state - 1s^2 `  
 ` 2 s 2.0 #valence state - 2s^2 `  
 ` 2 p 6.0 #valence state - 2p^6`
-
+```
 for a pseudopotential with a <img alt="$2s$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/3b3b95a23e582b767082e556418815ee.svg?invert_in_darkmode&sanitize=true" align=middle width="15.865245pt" height="21.10812pt"/> and <img alt="$2p$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/b647ff71634d36e3d4cecfae0ce1446d.svg?invert_in_darkmode&sanitize=true" align=middle width="16.428225pt" height="21.10812pt"/> valence electrons or the
 block
-
+```
 `ATOMIC_FILLING: 3 0 `  
 ` 1 s 2.0 #core state `  
 ` 2 s 2.0 #core state `  
 ` 2 p 6.0 #core state`
-
+```
 could be used for a pseudopotential with no valence electrons.
 
 ### CUTOFF
@@ -2465,7 +2682,7 @@ the cutoff radii used in Troullier-Martins pseudopotentials.
 
 For example to define a softened Hamann pseudopotential for Carbon would
 be
-
+```
 `ATOMIC_FILLING: 1 2 `  
 ` 1 s 2.0 `  
 ` 2 s 2.0 `  
@@ -2474,10 +2691,10 @@ be
 ` s 0.8 `  
 ` p 0.85 `  
 ` d 0.85`
-
+```
 while a similarly softened Troullier-Marting pseudopotential for Carbon
 would be
-
+```
 `ATOMIC_FILLING: 1 2 `  
 ` 1 s 2.0 `  
 ` 2 s 2.0 `  
@@ -2486,7 +2703,7 @@ would be
 ` s 1.200 `  
 ` p 1.275 `  
 ` d 1.275`
-
+```
 ### SEMICORE\_RADIUS
 
 Specifying the SEMICORE\_RADIUS option turns on the semicore correction
@@ -2513,25 +2730,25 @@ is recommended that this module only be used for testing purposes.*
 </span>)
 
 All input to the PAW Tasks is contained within the compound NWPW block,
-
+```
 `NWPW `  
 ` ...`  
 `END`
-
+```
 To perform an actual calculation a TASK PAW directive is used
 ([Task](#TASK "wikilink")).
 
 `TASK PAW`
 
 In addition to the directives listed in [Task](#TASK "wikilink"), i.e.
-
+```
 `TASK paw energy `  
 `TASK paw gradient `  
 `TASK paw optimize `  
 `TASK paw saddle `  
 `TASK paw freqencies `  
 `TASK paw vib`
-
+```
 there are additional directives that are specific to the PSPW module,
 which are:
 
@@ -2542,7 +2759,7 @@ no input directives (defaults invoked throughout). There are
 sub-directives which allow for customized application; those currently
 provided as options for the PAW module
 are:
-
+```
 `NWPW `  
 ` CELL_NAME <string cell_name default 'cell_default'> `  
 ` [GEOMETRY_OPTIMIZE] `  
@@ -2569,7 +2786,7 @@ are:
 ` END`  
 ` MAPPING <integer mapping default 1>`  
 `END `
-
+```
 The following list describes these keywords.
 
   - <cell_name> - name of the the simulation\_cell named <cell_name>.
@@ -2627,7 +2844,7 @@ available in the directory $NWCHEM\_TOP/src/nwpw/libraryp/pspw\_default
 
 The elements listed in the following table are
 present:
-
+```
 ` H                                                  He`  
 `-------                              ------------------`  
 ` Li Be                               B  C  N  O  F  Ne`  
@@ -2647,7 +2864,7 @@ present:
 `         ------------------------------------------`  
 `          .  .  U  .  Pu .  .  .  .  .  .  .  .  .      `  
 `         ------------------------------------------`
-
+```
 The pseudopotential libraries are continually being tested and added.
 Also, the PSPW program can read in pseudopotentials in CPI and TETER
 format generated with pseudopotential generation programs such as the
@@ -2657,7 +2874,7 @@ pseudopotentials from Eric J. Bylaska at (Eric.Bylaska@pnl.gov).
 Similarly, a library of PAW basis used by PAW is currently available in
 the directory
 $NWCHEM\_TOP/src/nwpw/libraryp/paw\_default
-
+```
 ` H                                                  He`  
 `-------                              -----------------`  
 ` Li Be                               B  C  N  O  F  Ne`  
@@ -2677,7 +2894,7 @@ $NWCHEM\_TOP/src/nwpw/libraryp/paw\_default
 `         ------------------------------------------`  
 `          .  .  .  .  .  .  .  .  .  .  .  .  .  .      `  
 `         ------------------------------------------`
-
+```
 Currently there are not very many elements available for PAW. However,
 the user can request additional basis sets from Eric J. Bylaska at
 (Eric.Bylaska@pnl.gov).
@@ -2687,7 +2904,7 @@ Goedecker, and Hutter) has been implemented into the PSPW module. To
 access the pseudopotentials the pseudopotentials input block is used.
 For example, to redirect the code to use HGH pseudopotentials for carbon
 and hydrogen, the following input would be used.
-
+```
 `nwpw `  
 `... `  
 ` pseudopotentials `  
@@ -2696,14 +2913,14 @@ and hydrogen, the following input would be used.
 ` end `  
 `...`  
 `end`
-
+```
 The implementation of HGH pseudopotentials is rather limited in this
 release. HGH pseudopotentials cannot be used to optimize unit cells, and
 they do not work with the MULLIKEN option. They also have not yet been
 implemented into the BAND structure code.  
 To read in pseudopotentials in CPI format the following input would be
 used.
-
+```
 `nwpw `  
 `... `  
 ` pseudopotentials `  
@@ -2712,13 +2929,13 @@ used.
 ` end `  
 `...`  
 `end`
-
+```
 In order for the program to recognize the CPI format the CPI files, e.g.
 c.cpi have to be prepended with the "<CPI>" keyword.
 
 To read in pseudopotentials in TETER format the following input would be
 used.
-
+```
 `nwpw `  
 `... `  
 ` pseudopotentials `  
@@ -2727,7 +2944,7 @@ used.
 ` end `  
 `...`  
 `end`
-
+```
 In order for the program to recognize the TETER format the TETER files,
 e.g. c.teter have to be prepended with the "<TETER>" keyword.
 
@@ -2787,7 +3004,7 @@ pspw\_generator task. However, these datafiles are usually atomatically
 generated.
 
 The data stored in the one-dimensional pseudopotential file is
-
+```
 `character*2 element :: element name `  
 `integer charge :: valence charge of ion `  
 `real mass :: mass of ion `  
@@ -2800,9 +3017,9 @@ The data stored in the one-dimensional pseudopotential file is
 `real psi(nr,lmax) :: one-dimensional pseudowavefunctions `  
 `real r_semicore :: semicore radius `  
 `real rho_semicore(nr) :: semicore density`  
-
+```
 and the format of it is:
-
+```
 `[line 1: ] element [line 2: ] charge mass lmax`  
 `[line 3: ] (rcut(l), l=1,lmax)`  
 `[line 4: ] nr dr`  
@@ -2817,7 +3034,7 @@ and the format of it is:
 ` [line 2*nr+7:] ....`  
 ` [line 3*nr+5:] r(nr) rho_semicore(nr)`  
 `end if`
-
+```
 ## Car-Parrinello Scheme for Ab Initio Molecular Dynamics
 
 Car and Parrinello developed a unified scheme for doing *ab initio*
@@ -2957,7 +3174,7 @@ output:[Media:s2-example1.nwout](s2-example1.nwout "wikilink"))
 
 In this example, the total energy of the S<img alt="$_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/10f8f9bf55a697fc978ffe2990e3209d.svg?invert_in_darkmode&sanitize=true" align=middle width="6.5281095pt" height="14.10255pt"/> dimer using LDA
 approximation for the exchange-correlation functional is calculated.
-
+```
 ` echo`  
 ` title "total energy of s2-dimer LDA/30Ry with PSPW method"`  
 ` scratch_dir   ./scratch`  
@@ -2977,10 +3194,10 @@ approximation for the exchange-correlation functional is calculated.
 `   lmbfgs`  
 ` end`  
 ` task pspw energy`
-
+```
 The energies from the simulation will
 be
-
+```
 ` ...`  
 ` ==  Summary Of Results  ==`  
   
@@ -3010,7 +3227,7 @@ be
 ` `  
 `  Total PSPW energy   :  -0.2041363137E+02`  
 ` ...`
-
+```
 ### Structural optimization of S<img alt="$_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/10f8f9bf55a697fc978ffe2990e3209d.svg?invert_in_darkmode&sanitize=true" align=middle width="6.5281095pt" height="14.10255pt"/> dimer with LDA approximation
 
 (input:[Media:s2-example2.nw](s2-example2.nw "wikilink"),
@@ -3020,7 +3237,7 @@ In this example, the structure of the S<img alt="$_2$" src="https://raw.githubus
 generated from prior energy calculation is calculated. Since most of the
 parameters are already stored in the run-time database the input is very
 simple.
-
+```
 ` echo`  
 ` title "optimization of s2-dimer LDA/30Ry with PSPW method"`  
 ` scratch_dir   ./scratch`  
@@ -3031,21 +3248,21 @@ simple.
 `    xyz s2`  
 ` end`  
 ` task pspw optimize`
-
+```
 As the optimization process consists of series of total energy
 evaluations the contents of the output file are very much similar to
 that in Example I. At each step the total energy and force information
 will be outputed as
 follows
-
+```
 `   Step       Energy      Delta E   Gmax     Grms     Xrms     Xmax   Walltime`  
 `   ---- ---------------- -------- -------- -------- -------- -------- --------`  
 ` @    1     -20.41364254 -7.1D-05  0.00004  0.00004  0.00605  0.01048      7.8`
-
+```
 The best way to keep track of the optimization calculation is to run the
 following grep command on the output
 file.
-
+```
 ` grep @ outputfile`  
   
 ` @ Step       Energy      Delta E   Gmax     Grms     Xrms     Xmax   Walltime`  
@@ -3054,10 +3271,10 @@ file.
 ` @    1     -20.41364254 -7.1D-05  0.00004  0.00004  0.00605  0.01048      7.8`  
 ` @    2     -20.41364256 -2.3D-08  0.00020  0.00020  0.00003  0.00005      9.7`  
 ` @    2     -20.41364256 -2.3D-08  0.00020  0.00020  0.00003  0.00005      9.7`
-
+```
 The optimized energy and geometry will
 be
-
+```
 ` ...`  
 `       ----------------------`  
 `       Optimization converged`  
@@ -3093,7 +3310,7 @@ be
 `     2 S                   16.0000     0.00000000     0.00000000     0.94557591`  
 ` `  
 ` ...`
-
+```
 ### Frequency calculation of S<img alt="$_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/10f8f9bf55a697fc978ffe2990e3209d.svg?invert_in_darkmode&sanitize=true" align=middle width="6.5281095pt" height="14.10255pt"/> dimer with LDA approximation
 
 (input:[Media:s2-example3.nw](s2-example3.nw "wikilink"),
@@ -3103,7 +3320,7 @@ In this example, the vibrational frequency of the S<img alt="$_2$" src="https://
 results generated from prior geometry optimization is calculated. Since
 most of the parameters are already stored in the run-time database the
 input is very simple.
-
+```
 ` echo`  
 ` title "frequency calculation of s2-dimer LDA/30Ry with PSPW method"`  
 ` scratch_dir   ./scratch`  
@@ -3150,7 +3367,7 @@ generated
 `     6      723.419 ||    0.000000           0.000         0.000       0.000`  
 `  ----------------------------------------------------------------------------`  
 ` ...`
-
+```
 ### Ab initio molecular dynamics simulation (Car-Parrinello) of S<img alt="$_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/10f8f9bf55a697fc978ffe2990e3209d.svg?invert_in_darkmode&sanitize=true" align=middle width="6.5281095pt" height="14.10255pt"/> dimer using the LDA approximation
 
 (input:[Media:s2-example4.nw](s2-example4.nw "wikilink"),
@@ -3162,7 +3379,7 @@ In this example, a constant energy Car-Parrinello simulation of S<img alt="$_2$"
 dimer using LDA approximation is calculated. A brief introduction to the
 Car-Parrinello method can be found in
 [cpmd-lecture.pdf](cpmd-lecture.pdf "wikilink")
-
+```
 ` echo`  
 ` title "AIMD simulation of s2-dimer"`  
 ` scratch_dir   ./scratch`  
@@ -3189,13 +3406,13 @@ Car-Parrinello method can be found in
 ` end`  
 ` task pspw energy`  
 ` task pspw car-parrinello`
-
+```
 A plotting program (e.g. gnuplot, xmgrace) can be used to look at the
 total, potential, kinetic energies, contained in the s2-md.emotion file
 (see section [EMOTION motion file](#EMOTION_motion_file "wikilink") for
 datafile format)
 i.e.,
-
+```
 ` seattle-1604% gnuplot`  
 ` `  
 `       G N U P L O T`  
@@ -3223,7 +3440,7 @@ i.e.,
 ` Terminal type set to 'x11'`  
 ` gnuplot> plot "s2-md.emotion","s2-md.emotion" using 1:3`  
 ` gnuplot> `
-
+```
 The following plot shows the Car-Parrinello <img alt="$^3\Sigma_g^-$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/2223ae97efb963660ddc1ec0e60d2d36.svg?invert_in_darkmode&sanitize=true" align=middle width="29.43798pt" height="26.70657pt"/> S<img alt="$_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/10f8f9bf55a697fc978ffe2990e3209d.svg?invert_in_darkmode&sanitize=true" align=middle width="6.5281095pt" height="14.10255pt"/>
 energy surface generated from the
 simulation.
@@ -3238,7 +3455,7 @@ output:[Media:s2-example5.nwout](s2-example5.nwout "wikilink")
 [Media:s2-bomd.emotion.dat](s2-bomd.emotion.dat "wikilink") ) In
 this example, a constant energy Born-Oppenheimer simulation of S2 dimer
 using LDA approximation is calculated.
-
+```
 ` title "AIMD simulation of s2-dimer"`  
 ` echo`
 
@@ -3268,7 +3485,7 @@ using LDA approximation is calculated.
 `    bo_time_step 10.0`  
 ` end`  
 ` task pspw born-oppenheimer`
-
+```
 The following plot shows the <img alt="$^3\Sigma_g^-$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/2223ae97efb963660ddc1ec0e60d2d36.svg?invert_in_darkmode&sanitize=true" align=middle width="29.43798pt" height="26.70657pt"/> S<img alt="$_2$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/10f8f9bf55a697fc978ffe2990e3209d.svg?invert_in_darkmode&sanitize=true" align=middle width="6.5281095pt" height="14.10255pt"/> energy surface
 generated from the
 simulation.
@@ -3335,7 +3552,7 @@ to increase the ionic velocities by a factor of two at the start of the
 Car-Parrinello simulation.
 
 Key Input
-
+```
 ` ….`  
 ` Car-Parrinello`  
 ` fake_mass 500.0`  
@@ -3347,9 +3564,9 @@ Key Input
 ` xyz_filename     b12.00.xyz`  
 ` end`  
 ` ….`
-
+```
 Output
-
+```
 ` ….      `  
 `     wavefnc cutoff= 10.000  fft= 42x 42x 42(     6027 waves     1004 per task)`  
 ` `  
@@ -3369,16 +3586,16 @@ Output
 ` `  
 `Constant Energy Simulation         `  
 ` ….`
-
+```
 The program checks to see if the initial input ionic velocities have a
 non-zero center of mass velocity. If there is a non-zero center of mass
 velocity in the system then by default the program removes it. To turn
 off this feature set the following
-
-` nwpw`  
-`    translation on`  
-` end`
-
+```
+ nwpw 
+    translation on  
+ end
+```
 or
 
 ` set nwpw:com_shift .false.`
@@ -3414,12 +3631,12 @@ in units of au (conversion 1 au = 2.41889e-17 seconds).
 
 Key
 Input
-
-` ….`  
-` Car-Parrinello`  
-` SA_decay 4.134d4 4.134d4 #decay rate in units of au (1au=4.1889e-17seconds)`  
-` ….`
-
+```
+ ….
+ Car-Parrinello`  
+ SA_decay 4.134d4 4.134d4 #decay rate in units of au (1au=4.1889e-17seconds)  
+ ….
+```
 ## NWPW Tutorial 3: using isodesmic reaction energies to estimate gas-phase thermodynamics
 
 ([isodesmic.pdf](isodesmic.pdf "wikilink")
@@ -3540,16 +3757,16 @@ H = E + H<img alt="$_{correction}$" src="https://raw.githubusercontent.com/wiki/
 
 Thermodynamic output from a frequency
 calculation:
-
+```
 `Temperature                      =   298.15K`  
 `frequency scaling parameter      =   1.0000`  
   
 `Zero-Point correction to Energy  =   27.528 kcal/mol  (  0.043869 au)`  
 `Thermal correction to Energy     =   29.329 kcal/mol  (  0.046739 au)`
-
+```
 The following line contains the value for
 H<img alt="$_{correction}$" src="https://raw.githubusercontent.com/wiki/nwchemgit/nwchem/svgs/d07640e8892ddec9206d9f1ae6a1f2cc.svg?invert_in_darkmode&sanitize=true" align=middle width="61.39353pt" height="14.10255pt"/>
-
+```
 `Thermal correction to Enthalpy   =   29.922 kcal/mol  (  0.047683 au)`
 
 `Total Entropy                    =   44.401 cal/mol-K`  
@@ -3561,7 +3778,7 @@ H<img alt="$_{correction}$" src="https://raw.githubusercontent.com/wiki/nwchemgi
 `  - Translational                  =    2.979 cal/mol-K`  
 `  - Rotational                     =    2.979 cal/mol-K`  
 `  - Vibrational                    =    0.544 cal/mol-K`
-
+```
 <center>
 
 |              |             |             |             |             |               |             |               |            |
@@ -3651,7 +3868,7 @@ cell are defined in the geometry block. The simulation\_cell block is
 not needed since NWPW automatically uses the unit cell defined in the
 geometry
 block.
-
+```
 `title "Diamond 8 atom cubic cell - geometry and unit cell optimization"`  
 `echo`  
 ` `  
@@ -3697,10 +3914,10 @@ block.
 `set nwpw:cif_filename diamond.opt  # create a CIF file containing optimization history `  
 `set includestress .true.           # this option tells driver to optimize the unit cell`  
 `task pspw optimize ignore`
-
+```
 The optimized energy and geometry will
 be
-
+```
 ` ...`  
 `     ----------------------`  
 `     Optimization converged`  
@@ -3786,7 +4003,7 @@ be
 `------------------------------------------------------------------------------`  
 `                           number of included internuclear angles:          9`  
 `==============================================================================  ...`
-
+```
 The C-C bond distance after the geometry optimization is 1.58 Angs. and
 agrees very well with the experimental value of 1.54 Angs.. Another
 quantity that can be calculated from this simulation is the cohesive
@@ -3804,7 +4021,7 @@ used to the energy of an isolated carbon atom.
 
 (input:[file:catom-pspw.nw](catom-pspw.nw "wikilink"),
 output:[file:catom-pspw.nwout](catom-pspw.nwout "wikilink"))
-
+```
 `title "triplet carbon atom at pbe96 level using a large unit cell"`  
 `start c1-pspw`  
 `memory 1400 mb`  
@@ -3827,7 +4044,7 @@ output:[file:catom-pspw.nwout](catom-pspw.nwout "wikilink"))
 `  lmbfgs`  
 `end`  
 `task pspw energy`
-
+```
 The total energy from the simulation will be
 
 `Total PSPW energy   :  -0.5421213534E+01`
@@ -3853,7 +4070,7 @@ output:[Media:diamond-band.nwout](diamond-band.nwout "wikilink"))
 In this example the BAND module is used to optimize the unit cell and
 geometry for a diamond crystal at different Brillouin zone
 samplings.
-
+```
 `title "Diamond 8 atom cubic cell - geometry and unit cell optimization" `  
 `echo`  
   
@@ -3927,7 +4144,7 @@ samplings.
 `end`  
 `set nwpw:cif_filename diamond555.opt`  
 `driver; clear; maxiter 40; end; task band optimize ignore`
-
+```
 The following figure shows a plot of the cohesive energy and C-C bond
 distance versus the Brillouin zone sampling. As can be seen in this
 figure the cohesive energy (w/o zero-point correction) and C-C bond
@@ -3950,7 +4167,7 @@ In this example the BAND module is used to optimize a 2 atom unit cell
 for a diamond crystal at different Brillouin zone samplings. The
 optimized energy and geometry will be (Monkhorst-Pack sampling of
 11x11x11)
-
+```
 `     ----------------------`  
 `     Optimization converged`  
 `     ----------------------`  
@@ -4005,7 +4222,7 @@ optimized energy and geometry will be (Monkhorst-Pack sampling of
 ` ------------------------------------------------------------------------------`  
 `                         number of included internuclear distances:          1`  
 ` ==============================================================================`
-
+```
 The following figure shows a plot of the cohesive energy and C-C bond
 distance versus the Brillouin zone sampling for the 8 atom SC unit cell
 and the 2 atom FCC unit
@@ -4025,7 +4242,7 @@ coordinates and the unit cell are defined in the geometry block. The
 simulation\_cell block is not needed since NWPW automatically uses the
 unit cell defined in the geometry
 block.
-
+```
 `title "Diamond 2 atom fcc cell Brillouin sampling=9x9x9 M-P - Band structure plot"`  
 `echo`  
   
@@ -4071,7 +4288,7 @@ block.
 `   zone_structure_name fccpath`  
 `end`  
 `task band structure`
-
+```
 This calculation outputs the
 [file:diamondfcc.restricted\_band.dat](diamondfcc.restricted_band.dat "wikilink"))
 data file in the permanent\_directory. A plotting (e.g. gnuplot or
@@ -4094,12 +4311,54 @@ input:[diamond-dos8.nw](diamond-dos8.nw "wikilink") output:
 [diamond-dos8.nwout.gz](diamond-dos8.nwout.gz "wikilink"),
 [diamond-dos8.dos.dat](diamond-dos8.dos.dat "wikilink"))
 
-The following example uses the BAND module to calculate the density of
-states the diamond
-crystal.
+
+There are two possible ways to use the BAND module to calculate the density and projected density of states.  The first approach just uses the eigenvalues generated from an energy calculation to generate a density of states.  The following example uses this strategy to calculate the density of states and projected density of states of diamond.
 
 ```
-title "Diamond 2 atom fcc cell Brillouin sampling=9x9x9 M-P - Band structure plot"  
+title "Diamond 2 atom fcc cell Brillouin sampling=9x9x9 M-P - density of states plot"  
+echo  
+  
+permanent_dir ./perm  
+scratch_dir   ./scratch  
+   
+start diamond-dos  
+   
+memory 1950 mb  
+  
+#**** Enter the geometry using fractional coordinates ****  
+geometry center noautosym noautoz print   
+  system crystal   
+    lat_a 2.500d0   
+    lat_b 2.500d0   
+    lat_c 2.500d0   
+    alpha 60.0d0   
+    beta  60.0d0   
+    gamma 60.0d0   
+  end  
+ C  0.00000d0  0.00000d0  0.00000d0  
+ C  0.25000d0  0.25000d0  0.25000d0  
+end  
+   
+nwpw  
+  ewald_rcut 3.0  
+  ewald_ncut 8    #The default value of 1 needs to be increased  
+  lmbfgs  
+  xc pbe96  
+  
+  monkhorst-pack 9 9 9  
+  dos                   # dos keyword tells the code to calculate dos at the end of an energy calculation
+  mulliken              # turn on projected density of states
+  virtual 8             # include 8 virtual states
+end  
+ 
+task band energy  
+```
+
+
+The other approach uses the band structure code to calculate the eigenvalues given a precomputed density.  The approach is slower than the first approach, however, it can be used to substantially increase the number of k-points and virtual orbitals used to generate the density of states.  The following example demonstrates this capability to calculate the density of states and projected density of states of the diamond crystal.
+
+```
+title "Diamond 2 atom fcc cell Brillouin sampling=9x9x9 M-P - density of states plot"  
 echo  
   
 permanent_dir ./perm  
@@ -4136,8 +4395,10 @@ end
 task band energy  
   
 nwpw  
-   virtual 26                #26 virtual orbitals included in the DOS calculation  
+   virtual 26                     #26 virtual orbitals included in the DOS calculation  
+   dos 0.002 700 -1.00000 2.0000  #alpha npoints emin emax,....,change default energy range and gridding. note alpha not used in task band dos calculations
    dos-grid 11 11 11  
+   mulliken                       # mulliken keyword used to turn on projected density of states
 end  
 task band dos
 ```
@@ -4152,7 +4413,52 @@ states.
 
 </center>
 
+
+
+
+
 ### Calculate the Phonon Spectrum of Diamond
+
+
+```
+title "Diamond 2 atom fcc cell Brillouin sampling=9x9x9 M-P - Phonon spectra"  
+echo  
+  
+permanent_dir ./perm  
+scratch_dir   ./scratch  
+   
+start diamond-dos  
+   
+memory 1950 mb  
+  
+#**** Enter the geometry using fractional coordinates ****  
+geometry center noautosym noautoz print   
+  system crystal   
+    lat_a 2.500d0   
+    lat_b 2.500d0   
+    lat_c 2.500d0   
+    alpha 60.0d0   
+    beta  60.0d0   
+    gamma 60.0d0   
+  end  
+ C  0.00000d0  0.00000d0  0.00000d0  
+ C  0.25000d0  0.25000d0  0.25000d0  
+end  
+   
+nwpw  
+  ewald_rcut 3.0  
+  ewald_ncut 8    #The default value of 1 needs to be increased  
+  lmbfgs  
+  xc pbe96  
+  
+  monkhorst-pack 9 9 9  
+end  
+
+task band energy  
+task band freq
+
+```
+
 
 ## NWPW Tutorial 6: optimizing the unit cell of nickel with fractional occupation
 
@@ -4272,50 +4578,50 @@ The following example uses the BAND module to optimize the unit cell and
 geometry for a Diamond crystal with Fd-3m symmetry. The fractional
 coordinates, unit cell, and symmetry are defined in the geometry
 block.
-
-`title "Diamond 8 atom cubic cell generated using Fd-3m symmetry - geometry and unit cell optimization"`  
-`echo`  
+```
+title "Diamond 8 atom cubic cell generated using Fd-3m symmetry - geometry and unit cell optimization" 
+echo 
   
-`memory 1500 mb`  
+memory 1500 mb
   
-`permanent_dir ./perm`  
-`scratch_dir   ./scratch`  
+permanent_dir ./perm
+scratch_dir   ./scratch
   
-`start diamond-symmetry`  
+start diamond-symmetry  
   
   
-`geometry nocenter noautosym noautoz print `  
-` system crystal `  
-`   lat_a 3.58`  
-`   lat_b 3.58`  
-`   lat_c 3.58`  
-`   alpha 90.0`  
-`   beta  90.0`  
-`   gamma 90.0`  
-` end`  
-`symmetry Fd-3m`  
-`C 0.0 0.0 0.0`  
-`end `  
-`set nwpw:cif_filename diamond-symmetry`  
+geometry nocenter noautosym noautoz print 
+ system crystal 
+   lat_a 3.58 
+   lat_b 3.58 
+   lat_c 3.58  
+   alpha 90.0  
+   beta  90.0  
+   gamma 90.0  
+ end
+symmetry Fd-3m
+C 0.0 0.0 0.0
+end 
+set nwpw:cif_filename diamond-symmetry
   
-`#turn on pseudopotential filtering `  
-`set nwpw:kbpp_ray    .true.`  
-`set nwpw:kbpp_filter .true.`  
-` `  
-`#***** setup the nwpw Band code - 3x3x3 k-point mesh ****`  
-`nwpw`  
-`  ewald_rcut 3.0`  
-`  ewald_ncut 8`  
-`  xc pbe96`  
-`  lmbfgs`  
-`  monkhorst-pack 3 3 3`  
-`  np_dimensions -1 -1 4`  
-`end`  
+#turn on pseudopotential filtering  
+set nwpw:kbpp_ray    .true.
+set nwpw:kbpp_filter .true.
   
-`set includestress  .true.   # tell driver to optimize unit cell`  
-`set includelattice .true.   # tell driver to optimize with a,b,c,alpha,beta,gamma`  
-`task band optimize ignore`
-
+#***** setup the nwpw Band code - 3x3x3 k-point mesh ****  
+nwpw
+  ewald_rcut 3.0
+  ewald_ncut 8
+  xc pbe96  
+  lmbfgs
+  monkhorst-pack 3 3 3
+  np_dimensions -1 -1 4
+end  
+  
+set includestress  .true.   # tell driver to optimize unit cell
+set includelattice .true.   # tell driver to optimize with a,b,c,alpha,beta,gamma
+task band optimize ignore
+```
 The optimized geometry will also contain the information about the
 symmetry being
 used
@@ -4835,45 +5141,45 @@ wavefunction and geometry in tandem.
 The following example demonstrates how to uses the PAW module to
 optimize the unit cell and geometry for a silicon-carbide
 crystal.
-
-`title "SiC 8 atom cubic cell - geometry and unit cell optimization"`  
-`start SiC`  
-`#**** Enter the geometry using fractional coordinates ****`  
-`geometry units au center noautosym noautoz print`  
-` system crystal`  
-`   lat_a 8.277d0`  
-`   lat_b 8.277d0`  
-`   lat_c 8.277d0`  
-`   alpha 90.0d0`  
-`   beta  90.0d0`  
-`   gamma 90.0d0`  
-` end`  
-`Si    -0.50000d0  -0.50000d0  -0.50000d0`  
-`Si     0.00000d0   0.00000d0  -0.50000d0`  
-`Si     0.00000d0  -0.50000d0   0.00000d0`  
-`Si    -0.50000d0   0.00000d0   0.00000d0`  
-`C     -0.25000d0  -0.25000d0  -0.25000d0`  
-`C      0.25000d0   0.25000d0  -0.25000d0`  
-`C      0.25000d0  -0.25000d0   0.25000d0`  
-`C     -0.25000d0   0.25000d0   0.25000d0`  
-`end`  
-`#***** setup the nwpw gamma point code ****`  
-`nwpw`  
-`  simulation_cell`  
-`    ngrid 16 16 16`  
-`  end`  
-`  ewald_ncut 8`  
-`end`  
-`set nwpw:minimizer 2`  
-`set nwpw:psi_nolattice .true.  # turns of unit cell checking for wavefunctions`  
-`driver`  
-`  clear`  
-`  maxiter 40`  
-`end`  
-`set includestress .true.         # this option tells driver to optimize the unit cell`  
-`set nwpw:stress_numerical .true. #currently only numerical stresses implemented in paw`  
-`task paw optimize`
-
+```
+title "SiC 8 atom cubic cell - geometry and unit cell optimization" 
+start SiC
+#**** Enter the geometry using fractional coordinates ****  
+geometry units au center noautosym noautoz print
+ system crystal
+   lat_a 8.277d0
+   lat_b 8.277d0 
+   lat_c 8.277d0  
+   alpha 90.0d0  
+   beta  90.0d0
+   gamma 90.0d0
+ end 
+Si    -0.50000d0  -0.50000d0  -0.50000d0
+Si     0.00000d0   0.00000d0  -0.50000d0  
+Si     0.00000d0  -0.50000d0   0.00000d0 
+Si    -0.50000d0   0.00000d0   0.00000d0
+C     -0.25000d0  -0.25000d0  -0.25000d0
+C      0.25000d0   0.25000d0  -0.25000d0 
+C      0.25000d0  -0.25000d0   0.25000d0
+C     -0.25000d0   0.25000d0   0.25000d0  
+end  
+#***** setup the nwpw gamma point code ****  
+nwpw
+  simulation_cell 
+    ngrid 16 16 16
+  end
+  ewald_ncut 8 
+end  
+set nwpw:minimizer 2
+set nwpw:psi_nolattice .true.  # turns of unit cell checking for wavefunctions 
+driver
+  clear 
+  maxiter 40  
+end
+set includestress .true.         # this option tells driver to optimize the unit cell
+set nwpw:stress_numerical .true. #currently only numerical stresses implemented in paw
+task paw optimize
+```
 ### Running a Car-Parrinello Simulation
 
 In this section we show how use the PAW module to perform a
@@ -4895,33 +5201,33 @@ the simulation cell cell is aperiodic and cubic with a side length of
 is 44 Ry). The time step and fake mass for the Car-Parrinello run are
 specified to be 5.0 au and 600.0 au,
 respectively.
-
-`start c2_paw_lda_md`  
-`title "C2 restricted singlet dimer, LDA/44Ry - constant energy Car-Parrinello simulation"`  
-`geometry  `  
-` C    -0.62 0.0 0.0`  
-` C     0.62 0.0 0.0`  
-`end`  
-`pspw`  
-`  simulation_cell units angstroms`  
-`     boundary_conditions aperiodic`  
-`     lattice`  
-`       lat_a 10.00d0`  
-`       lat_b 10.00d0`  
-`       lat_c 10.00d0`  
-`     end`  
-`     ngrid 40 40 40`  
-`  end`  
-`  Car-Parrinello`  
-`    fake_mass 600.0`  
-`    time_step 5.0`  
-`    loop 10 10`  
-`  end`  
-`end`  
-`set nwpw:minimizer 2`  
-`task paw energy`  
-`task paw Car-Parrinello`
-
+```
+start c2_paw_lda_md  
+title "C2 restricted singlet dimer, LDA/44Ry - constant energy Car-Parrinello simulation"
+geometry  
+ C    -0.62 0.0 0.0 
+ C     0.62 0.0 0.0 
+end
+pspw 
+  simulation_cell units angstroms  
+     boundary_conditions aperiodic 
+     lattice 
+       lat_a 10.00d0  
+       lat_b 10.00d0
+       lat_c 10.00d0
+     end  
+     ngrid 40 40 40
+  end  
+  Car-Parrinello 
+    fake_mass 600.0
+    time_step 5.0 
+    loop 10 10  
+  end 
+end 
+set nwpw:minimizer 2
+task paw energy
+task paw Car-Parrinello
+```
 ## NWPW Capabilities and Limitations
 
   - Hybrid Functionals (e.g. PBE0, LDA-SIC) only work in PSPW.
